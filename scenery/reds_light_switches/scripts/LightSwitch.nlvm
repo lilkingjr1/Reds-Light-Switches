@@ -1,0 +1,190 @@
+// Light Switch NL2 Script
+// David Wolfe (Red-Thirten)
+// 4/7/2022
+// Detects user input to switch, animates switch SCO, plays sounds, and controls the lights of specified SCOs in the simulation.
+// Licensed under GNU GPLv3 - See LICENSE for more details.
+
+import com.nolimitscoaster.Script;
+import com.nolimitscoaster.SceneObject;
+import com.nolimitscoaster.SceneObjectElement;
+import com.nolimitscoaster.StaticSound;
+import com.nolimitscoaster.Button;
+import nlvm.math3d.Vector4f;
+
+import util.RayCast;
+import util.OperatorSwitch;
+
+public class LightSwitch extends Script{	
+	protected String SCRIPT_NAME = "LightSwitch";				// Script name for debugging
+	protected String SWITCH_ELEMENT_PREFIX = "switch";			// Prefix of the switch element names in the SCO/model
+	protected String CURSOR_ELEMENT_PREFIX = "cursor";			// Prefix of the cursor element names in the SCO/model
+	protected float ON_ANGLE = 0.f;								// Angle from the model's original switch position to appear on
+	protected float OFF_ANGLE = 75.f;							// Angle from the model's original switch position to appear off
+	protected float COOLDOWN = 0.25f;							// Cooldown (in seconds) before the switch can be switched again
+	protected float ACTIVE_DIST = 0.9f;							// Distance (in meters) between the player and the switch where the switch is active
+	protected float CURSOR_SIZE = 0.03f;						// 
+	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time, in seconds, for the switch to travel ("speed")
+	protected int AXIS = 0;										// Axis values: 0 = x, 1 = y, 2 = z
+	
+	
+	private SceneObject sco;
+	private SceneObject[][] lightSCOs;
+	private SceneObjectElement[] cursors;
+	private Vector4f entColor = new Vector4f(1,1,1,0);
+	private StaticSound soundOn, soundOff;
+	
+	private bool flipped, entColorEnabled, firstSwitchViewed = false;
+	private float curTime, curCooldownTime, overrideInterval = 0.f;
+	
+	private RayCast[] rays;
+    protected OperatorSwitch[] switches;
+	
+	public bool onLateInit(){ // On initialization of Play simulation
+		sco = getScoFromParentEntity(); // Get and assign local sco
+		
+		// Get overrideInterval value as a "watchdog" backup to further enforce switch and light synchronization
+		overrideInterval = sco.getDoubleParameter("override_interval").floatValue();
+		entColorEnabled = !sco.getBooleanParameter("disable_ent_color").boolValue();
+		
+		int numSwitches = 1;
+		if (getElementOnScoForName(sco, SWITCH_ELEMENT_PREFIX + numSwitches) == null) return false; // Check for at least one switch
+		while (sco.getElementForName(SWITCH_ELEMENT_PREFIX + numSwitches) != null) numSwitches++; // Find number of switches
+		--numSwitches;
+		lightSCOs = new SceneObject[numSwitches][]; // Initialize arrays
+		cursors = new SceneObjectElement[numSwitches];
+		switches = new OperatorSwitch[numSwitches];
+		rays = new RayCast[numSwitches];
+		
+		for (int i = 0; i < numSwitches; i++){ // Iterate through switches for setup			
+			SceneObjectElement switchElem = sco.getElementForName(SWITCH_ELEMENT_PREFIX + (i+1));
+			switches[i] = new OperatorSwitch(switchElem, 2, OFF_ANGLE, ON_ANGLE, AXIS, SWITCH_TRAVEL_TIME); // Setup switches
+			if (sco.getBooleanParameter("initial_state" + (i+1)).boolValue()){ // Set switch angle based on initial state
+				switches[i].setSwitchState(1);
+			}
+			else{
+				switches[i].setSwitchState(0);
+			}
+			
+			cursors[i] = getElementOnScoForName(sco, CURSOR_ELEMENT_PREFIX + (i+1)); // Get cursor elements
+			if (cursors[i] != null){ // Make cursors invisible if valid
+				cursors[i].setVisible(false);
+			}
+			else return false;
+			
+			rays[i] = new RayCast(switchElem); // Setup rays
+			
+			// Get array of light SCOs and validate
+			String lightsName = sco.getStringParameter("lights_name" + (i+1));
+			if (lightsName.length() > 0){
+				lightSCOs[i] = sim.getSceneObjectsWithName(lightsName);
+				if (lightSCOs[i].length == 0){
+					System.err.println(SCRIPT_NAME + ": (Switch " + (i+1) + ") Could not find any light SCOs with the name \"" + lightsName + "\"!");
+					return false;
+				}
+			}
+			// Attempt to set lights to match switch state (even though their script will likely override it in the first few seconds of simulation...)
+			setLightsState(lightSCOs[i], (switches[i].getSwitchState() != 0));
+		}
+		
+		// Set up on and off sounds effects
+		soundOn = StaticSound.loadFromResource(sco.getResourcePathParameter("switch_on_sfx_file"), StaticSound.FLAG_MIXDOWN_MONO);
+		soundOff = StaticSound.loadFromResource(sco.getResourcePathParameter("switch_off_sfx_file"), StaticSound.FLAG_MIXDOWN_MONO);
+		if (soundOn == null || soundOff == null){
+			System.err.println(SCRIPT_NAME + ": Failed to load sound files!");
+			return false;
+		}
+		
+		soundOn.setDistanceParameters(1.f, 1.f);
+		soundOn.setGain(0.5f);
+		soundOn.setPitch(1.f);
+		soundOn.setDopplerMode(false);
+		soundOn.setEnvironmentMode(StaticSound.E_ENVMODE_LOCAL);
+		
+		soundOff.setDistanceParameters(1.f, 1.f);
+		soundOff.setGain(0.5f);
+		soundOff.setPitch(1.f);
+		soundOff.setDopplerMode(false);
+		soundOff.setEnvironmentMode(StaticSound.E_ENVMODE_LOCAL);
+		
+		return true;
+	}
+	
+	protected SceneObject getScoFromParentEntity(){ // Returns the SceneObject via the parent entity ID with error handling
+        SceneObject sco = sim.getSceneObjectForEntityId(getParentEntityId());
+        if (sco == null){
+            System.err.println(SCRIPT_NAME + ": This script only works with NL2 scene objects");
+        }
+        return sco;
+    }
+	
+	protected SceneObjectElement getElementOnScoForName(SceneObject sco, String name){ // Basically getElementForName() with error handling - Gratz to bestdani for idea
+        SceneObjectElement element = sco.getElementForName(name);
+        if (element == null){
+            System.err.println(SCRIPT_NAME + ": Wrong 3d model loaded (Cannot find \"" + name + "\" element)");
+        }
+        return element;
+    }
+	
+	private void setLightsState(SceneObject[] lights, bool state){
+		if (lights != null){
+			for (int i = lights.length-1; i >= 0; --i){
+				for (int j = lights[i].getLightCount()-1; j >= 0; --j){
+					lights[i].getLightAt(j).setEnabled(state);
+				}
+				if (entColorEnabled){
+					entColor.w = state ? 1.f : 0.f;
+					lights[i].setEntityColor(entColor);
+				}
+			}
+		}
+	}
+
+	public void onNextFrame(float tick){
+		if (overrideInterval > 0.f){
+			curTime = curTime + tick;
+			if (curTime > overrideInterval){
+				curTime = 0.f;
+				for (int i = lightSCOs.length-1; i >= 0; --i){
+					setLightsState(lightSCOs[i], (switches[i].getSwitchState() != 0));
+				}
+			}
+		}
+		
+		if (flipped){
+			curCooldownTime = curCooldownTime + tick;
+			if (curCooldownTime > COOLDOWN){
+				curCooldownTime = 0.f;
+				flipped = false;
+			}
+		}
+		
+		if(sim.isViewerInsideSphere(sco.getTranslation(), ACTIVE_DIST)){
+			firstSwitchViewed = false;
+			for (int i = rays.length-1; i >= 0; --i){
+				if (!flipped && !firstSwitchViewed && rays[i].isViewerLookingAt(CURSOR_SIZE)){
+					cursors[i].setVisible(true);
+					if (Button.isPressed(Button.ACTION)){
+						if (switches[i].getSwitchState() != 0) switches[i].setSwitchState(0); else switches[i].setSwitchState(1);
+						
+						if (switches[i].getSwitchState() != 0){
+							setLightsState(lightSCOs[i], true);
+							soundOn.setPosition(switches[i].getSwitchAbsTrans());
+							soundOn.play();
+						}
+						else{
+							setLightsState(lightSCOs[i], false);
+							soundOff.setPosition(switches[i].getSwitchAbsTrans());
+							soundOff.play();
+						}
+						flipped = true;
+					}
+					firstSwitchViewed = true;
+				}
+				else{
+					cursors[i].setVisible(false);
+				}
+				switches[i].onNextFrame(tick); // Run switch object's onNextFrame() to animate
+			}
+		}
+	}	
+}

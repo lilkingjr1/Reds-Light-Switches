@@ -1,0 +1,33 @@
+
+import util.OperatorSwitch;
+
+public class KeySwitch extends LightSwitch{
+	private static final String KEY_ELEMENT_NAME = "key"; // Name of the key element in the SCO/model
+	private static final float KEY_TRAVEL_DIST = 0.04f;	// Distance the key travels out of the switch, in meters
+	
+    public final bool onLateInit(){		
+        super.SCRIPT_NAME = "KeySwitch";				// Script name for debugging
+		super.ON_ANGLE = 0.f;							// Angle from the model's original switch position to appear on
+		super.OFF_ANGLE = -45.f;						// Angle from the model's original switch position to appear off
+		super.COOLDOWN = 2.f;							// Cooldown (in seconds) before the switch can be switched again
+		super.SWITCH_TRAVEL_TIME = 0.6f;				// Time, in seconds, for the switch to travel ("speed")
+		super.AXIS = 2;									// Axis values: 0 = x, 1 = y, 2 = z
+		
+        super.onLateInit();
+		
+		if (getElementOnScoForName(getScoFromParentEntity(), KEY_ELEMENT_NAME) == null) return false; // Check for key
+		super.switches[0] = new OperatorSwitch( // Setup key switch
+			getElementOnScoForName(getScoFromParentEntity(), SWITCH_ELEMENT_PREFIX + "1"),
+			2,
+			OFF_ANGLE,
+			ON_ANGLE,
+			AXIS,
+			SWITCH_TRAVEL_TIME,
+			getElementOnScoForName(getScoFromParentEntity(), KEY_ELEMENT_NAME),
+			KEY_TRAVEL_DIST,
+			false
+		);
+		
+		return (switches[0] != null);
+    }
+}

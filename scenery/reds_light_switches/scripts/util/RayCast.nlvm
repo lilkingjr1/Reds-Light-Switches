@@ -1,0 +1,112 @@
+/**Ray Cast NL2 Class**
+	Author: RobbinBob
+	Contributors: Red-Thirten
+	Date: 5/4/2022
+	Min. NL2 Ver: 2.6.2.0
+	License: CC0 1.0 Universal
+
+	Constructors:
+		RayCast(SceneObjectElement planePoint)
+		RayCast(Vector3f rayVector, Vector3f rayPoint, Vector3f planeNormal, Vector3f planePoint) [Useful if you want to define a custom plane normal, or a non-viewer ray]
+
+	Methods:
+		Vector3f getIntersectionPoint() - Returns global translation point where the infinite ray intersects with the infinite normal plane.
+		float getDistanceToTarget() - Returns the distance, in meters, from the intersection point to the plane point.
+		bool isViewerLookingAt(float range) - Returns whether or not the viewer is looking at the plane point within a spherical range. Will override ray with viewer values.
+		void setRayFromViewer() - Sets ray values from viewer values.
+		void setRayVector(Vector3f rayVector) - Set object's ray vector.
+		void setRayPoint(Vector3f rayPoint) - Set object's ray point.
+		void setplaneNormal(Vector3f planeNormal) - Set object's plane normal vector.
+		void setplanePoint(Vector3f planePoint) - Set object's plane point.
+*/
+
+package util;
+
+import com.nolimitscoaster.NoLimits;
+import com.nolimitscoaster.Simulator;
+import com.nolimitscoaster.SceneObjectElement;
+import nlvm.math3d.Vector3f;
+import nlvm.math3d.Matrix4x4f;
+
+public class RayCast{
+	Simulator sim = NoLimits.getSimulator();
+	
+	Vector3f rayVector = new Vector3f();
+	Vector3f rayPoint = new Vector3f();
+	Vector3f planeNormal = new Vector3f(-1.0f, 0.0f, 1.0f);
+	Vector3f planePoint = new Vector3f();
+	
+	// Constructors //
+	public RayCast(SceneObjectElement planePoint){
+		this.planePoint = planePoint.getAbsoluteTranslation();
+	}
+	
+	public RayCast(Vector3f rayVector, Vector3f rayPoint, Vector3f planeNormal, Vector3f planePoint){
+		this.rayVector = rayVector;
+		this.rayPoint = rayPoint;
+		this.planeNormal = planeNormal;
+		this.planePoint = planePoint;
+	}
+	
+	// Public Methods //
+	public Vector3f getIntersectionPoint(){ // Returns global translation point where the infinite ray intersects with the infinite normal plane (non-destructive to object's values).
+		Vector3f diff = new Vector3f(rayPoint);
+		diff.sub(planePoint);
+		
+		float prod1 = diff.dot(planeNormal);
+		float prod2 = rayVector.dot(planeNormal);
+		float prod3 = prod1 / prod2;
+		
+		Vector3f rayVectorMul = new Vector3f(rayVector);
+		Vector3f rayPointSub = new Vector3f(rayPoint);
+		rayVectorMul.mul(prod3);
+		rayPointSub.sub(rayVectorMul);
+		
+		return rayPointSub;
+	}
+	
+	public float getDistanceToTarget(){ // Returns the distance, in meters, from the intersection point to the plane point.
+		Vector3f ip = getIntersectionPoint();
+		
+		float x1 = squared(ip.x - this.planePoint.x); // 3D Pythagorean Theorem
+		float y1 = squared(ip.y - this.planePoint.y);
+		float z1 = squared(ip.z - this.planePoint.z);
+		
+		return (float) Math.sqrt(x1 + y1 + z1);
+	}
+	
+	public bool isViewerLookingAt(float range){ // Returns whether or not the viewer is looking at the plane point within a spherical range. Will override ray values with viewer values.
+		setRayFromViewer();
+		
+		return getDistanceToTarget() <= range;
+	}
+	
+	public void setRayFromViewer(){ // Sets ray values from viewer values.
+		Matrix4x4f viewMatrix = new Matrix4x4f();
+		sim.getViewMatrix(viewMatrix);
+		
+		viewMatrix.getTrans(this.rayPoint);
+		this.rayVector.set( viewMatrix.elemAt(2, 0), viewMatrix.elemAt(2, 1), viewMatrix.elemAt(2, 2) ); // Rotation vector
+	}
+	
+	public void setRayVector(Vector3f rayVector){
+		this.rayVector = rayVector;
+	}
+	
+	public void setRayPoint(Vector3f rayPoint){
+		this.rayPoint = rayPoint;
+	}
+	
+	public void setPlaneNormal(Vector3f planeNormal){
+		this.planeNormal = planeNormal;
+	}
+	
+	public void setPlanePoint(Vector3f planePoint){
+		this.planePoint = planePoint;
+	}
+	
+	// Private Methods //
+	private float squared(float value){ // Faster than Math.pow(value, 2)
+		return value * value;
+	}
+}

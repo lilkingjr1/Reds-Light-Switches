@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <material>
+    <preview>placard/placard_running_lights.png</preview>
+    <renderpass>
+      <shadercore>Roughness = 1;
+Specular = 0;
+tmp0 = Sub(1, tex0);
+tmp1 = Mul(tex0, entity0);
+tmp2 = Mul(tmp0, entity1);
+result = Add(tmp1, tmp2);</shadercore>
+      <transparency mode="opaque"/>
+      <linearshading/>
+      <custommaterial>
+        <diffuse r="1" g="1" b="0.941177"/>
+        <ambient r="1" g="1" b="0.941177"/>
+        <specular r="1" g="1" b="0.941177"/>
+        <shininess exponent="42.3385"/>
+      </custommaterial>
+      <rgbgen mode="lighting"/>
+      <texunit>
+        <map>placard/placard_running_lights.png</map>
+        <tcgen mode="base"/>
+      </texunit>
+    </renderpass>
+  </material>
+</root>

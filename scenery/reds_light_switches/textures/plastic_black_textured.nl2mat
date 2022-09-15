@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <material>
+    <description>A textured black scratched plastic with normal map.</description>
+    <preview>switch/Plastic003_2K_Color.jpg</preview>
+    <renderpass>
+      <shadercore>Result = Mul(1.5, tex0);</shadercore>
+      <transparency mode="opaque"/>
+      <linearshading/>
+      <reflection bump="true" affectedbyspecular="true" fresnelconst="0" fresnelvar="0.4"/>
+      <rgbgen mode="bumplighting"/>
+      <texunit>
+        <map>switch/Plastic003_2K_Color.jpg</map>
+        <tcgen mode="base"/>
+      </texunit>
+      <texunit>
+        <map>switch/Plastic003_2K_Normal.jpg</map>
+        <bump mode="normalgloss"/>
+        <tcgen mode="base"/>
+      </texunit>
+    </renderpass>
+  </material>
+</root>

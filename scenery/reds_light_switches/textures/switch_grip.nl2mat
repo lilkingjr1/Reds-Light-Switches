@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <material>
+    <description>Black scratched plastic with the switch&apos;s height map.</description>
+    <preview>switch/switch_grip_height.png</preview>
+    <renderpass>
+      <shadercore>Result = Mul(1.5, tex0);</shadercore>
+      <transparency mode="opaque"/>
+      <linearshading/>
+      <rgbgen mode="bumplighting"/>
+      <texunit>
+        <map>switch/Plastic003_2K_Color.jpg</map>
+        <tcgen mode="base"/>
+      </texunit>
+      <texunit>
+        <map>switch/switch_grip_height.png</map>
+        <bump mode="heightgloss" heightscale="30"/>
+        <tcgen mode="base"/>
+      </texunit>
+    </renderpass>
+  </material>
+</root>

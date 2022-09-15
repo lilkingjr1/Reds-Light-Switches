@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <sceneobject>
+    <model path="models/switch.dae">
+      <clip distance="30"/>
+      <clip mesh="housing_nut" distance="5"/>
+      <clip mesh="switch1" distance="15"/>
+    </model>
+    <description>A scripted 30mm plastic switch, with customizable placard.</description>
+    <preview>textures/previews/switch.png</preview>
+    <param basescalex="2"/>
+    <param basescaley="2"/>
+    <param basescalez="2"/>
+    <usercolor>
+      <label>Placard Background</label>
+      <index>0</index>
+      <defaultcolor r="1" g="1" b="0.94902"/>
+    </usercolor>
+    <usercolor>
+      <label>Placard Text</label>
+      <index>1</index>
+      <defaultcolor r="0" g="0" b="0"/>
+    </usercolor>
+    <usercolor>
+      <label>Switch Color</label>
+      <index>2</index>
+      <defaultcolor r="1" g="0.968628" b="0.823529"/>
+    </usercolor>
+    <script>
+      <classpath>scripts</classpath>
+      <class>BinarySwitch</class>
+      <sharedvm>true</sharedvm>
+      <resource id="LICENSE">LICENSE</resource>
+    </script>
+    <scriptparameter>
+      <type>string</type>
+      <defaultvalue></defaultvalue>
+      <id>lights_name1</id>
+      <description>The shared name of light SCOs for this switch to control. All lights should have the same name (ie. &quot;station_switch&quot;, &quot;maitnence_switch&quot;, etc), Leave empty for passive mode.</description>
+      <label>Name of Lights to Control:</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>false</defaultvalue>
+      <id>initial_state1</id>
+      <description>Should the switch initially start in the &quot;On&quot; position or not.</description>
+      <label>Start &quot;On&quot;</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>double</type>
+      <defaultvalue>5</defaultvalue>
+      <id>override_interval</id>
+      <description>How often to set the current state of the switch to all lights. &quot;0&quot; disables. Attempts to keep lights with their own on/off scripts &quot;synced up&quot; to the switch. Values close to 0 may cause lag.</description>
+      <label>Override Interval (Seconds):</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type filetype="audio">resourcepath</type>
+      <defaultvalue>sounds/switch_on.ogg</defaultvalue>
+      <id>switch_on_sfx_file</id>
+      <description>Sound effect file to play when the switch is turned on.</description>
+      <label>Switch On Sound Effect</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type filetype="audio">resourcepath</type>
+      <defaultvalue>sounds/switch_off.ogg</defaultvalue>
+      <id>switch_off_sfx_file</id>
+      <description>Sound effect file to play when the switch is turned off.</description>
+      <label>Switch Off Sound Effect</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>false</defaultvalue>
+      <id>disable_ent_color</id>
+      <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
+      <label>Disable Entity Color Changing</label>
+    </scriptparameter>
+    <materialpath name="black">textures/plastic_black.nl2mat</materialpath>
+    <materialpath name="black_plastic">textures/plastic_black_textured.nl2mat</materialpath>
+    <materialpath name="cursor">textures/cursor.nl2mat</materialpath>
+    <materialpath name="ivory">textures/plastic_user2.nl2mat</materialpath>
+    <materialpath name="metal">textures/metal011.nl2mat</materialpath>
+    <materialpath name="metal_0">textures/metal011.nl2mat</materialpath>
+    <materialpath name="placard">textures/placard_switch.nl2mat</materialpath>
+    <materialpath name="switch_grip_height">textures/switch_grip.nl2mat</materialpath>
+  </sceneobject>
+</root>
