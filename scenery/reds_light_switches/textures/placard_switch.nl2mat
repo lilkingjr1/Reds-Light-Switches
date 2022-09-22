@@ -19,7 +19,12 @@ result = Add(tmp1, tmp2);</shadercore>
       </custommaterial>
       <rgbgen mode="lighting"/>
       <texunit>
-        <map>placard/placard_running_lights.png</map>
+        <animmap frequency="0">
+          <map>placard/placard_default.jpg</map>
+          <map>placard/placard_lights.jpg</map>
+          <map>placard/placard_running_lights.jpg</map>
+          <map>placard/placard_show_lights.jpg</map>
+        </animmap>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

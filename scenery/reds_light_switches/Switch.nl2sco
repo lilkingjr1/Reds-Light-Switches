@@ -74,6 +74,37 @@
       <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
+    <scriptparameter>
+      <type>string</type>
+      <defaultvalue>Only select ONE of the options below.</defaultvalue>
+      <id>placard_instructions</id>
+      <description>Selections for placard text. Changing this text does nothing.</description>
+      <label>========== Placard Options ==========</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>false</defaultvalue>
+      <id>placard0</id>
+      <label>No Placard (Invisible)</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>true</defaultvalue>
+      <id>placard1</id>
+      <label>Lights (Off / On)</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>false</defaultvalue>
+      <id>placard2</id>
+      <label>Running Lights (Off / On)</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>false</defaultvalue>
+      <id>placard3</id>
+      <label>Show Lights (Off / On)</label>
+    </scriptparameter>
     <materialpath name="black">textures/plastic_black.nl2mat</materialpath>
     <materialpath name="black_plastic">textures/plastic_black_textured.nl2mat</materialpath>
     <materialpath name="cursor">textures/cursor.nl2mat</materialpath>

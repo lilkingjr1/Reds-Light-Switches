@@ -1,12 +1,12 @@
 /**Operator Switch NL2 Class**
 	Author: David Wolfe (Red-Thirten)
-	Date: 5/10/2022
+	Date: 9/21/2022
 	A Java object representing a switch, with optional key component, that can animate to any given state position.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 
 	Constructors:
-		OperatorSwitch(SceneObjectElement switchElement, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime) -- Default object constructor
-		OperatorSwitch(SceneObjectElement switchElement, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime, -- Alternate object constructor, to support a key switch
+		OperatorSwitch(SceneObjectElement switchElement, int totalStates, int currentState, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime) -- Default object constructor
+		OperatorSwitch(SceneObjectElement switchElement, int totalStates, int currentState, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime, -- Alternate object constructor, to support a key switch
 			SceneObjectElement keyElement, float keyTravelDistance, bool keyStaysIn)
 
 	Methods:
@@ -26,45 +26,37 @@ import nlvm.math3d.Vector3f;
 public class OperatorSwitch{
 	private SceneObjectElement switchElement, keyElement;
 	private bool animate, hasKey, keyIn, keyStaysIn = false;
-	private int currentState = 0;
-	private int TOTAL_STATES = 2; // Semi-static (set only once during init)
+	private int currentState;
+	private int AXIS, TOTAL_STATES; // Semi-static (set only once during init)
 	private float t, theta, thetaCurrent, thetaTarget, delta, deltaCurrent;
 	private float DELTA_T, DELTA_Ta, SLOPE, KEY_DIST; // Semi-static (set only once during init)
 	private float START_ANGLE, END_ANGLE; // Semi-static (set only once during init)
-	private int AXIS; // Semi-static (set only once during init)
 
-	public OperatorSwitch(SceneObjectElement switchElement, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime){ // Default object constructor
+	public OperatorSwitch(SceneObjectElement switchElement, int totalStates, int currentState, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime){ // Default object constructor
 		this.switchElement = switchElement; // Assign element
 		TOTAL_STATES = totalStates; // Assign static number of states
+		this.currentState = currentState; // Assign current switch state
 		START_ANGLE = (float) Math.toRadians(startAngleDeg); // Assign static start and end angles
 		END_ANGLE = (float) Math.toRadians(endAngleDeg);
 		AXIS = rotationAxis;
 		SLOPE = (END_ANGLE - START_ANGLE) / (TOTAL_STATES - 1); // "Slope" that represents the solution space of possible angles the switch can be at for any given state
 		DELTA_T = travelTime;
 		DELTA_Ta = DELTA_T/2.f; // (De)Acceleration window is the first and last half of the animation (whole animation)
-		theta = START_ANGLE;
-		thetaCurrent = START_ANGLE;
-		setSwitchRotation(AXIS, START_ANGLE); // Set switch to start angle
+		thetaTarget = SLOPE * this.currentState + START_ANGLE; // Equation to calculate the angle target, based on the pre-calculated slope and current angle position
+		theta = thetaTarget;
+		thetaCurrent = thetaTarget;
+		setSwitchRotation(AXIS, thetaTarget); // Set switch to start angle
 	}
 	
-	public OperatorSwitch(SceneObjectElement switchElement, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime,
+	public OperatorSwitch(SceneObjectElement switchElement, int totalStates, int currentState, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime,
 			SceneObjectElement keyElement, float keyTravelDistance, bool keyStaysIn){ // Alternate object constructor, to support a key switch
+		this(switchElement, totalStates, currentState, startAngleDeg, endAngleDeg, rotationAxis, travelTime);
 		hasKey = true;
-		this.switchElement = switchElement;
 		this.keyElement = keyElement;
 		this.keyStaysIn = keyStaysIn;
 		KEY_DIST = keyTravelDistance;
-		TOTAL_STATES = totalStates;
-		START_ANGLE = (float) Math.toRadians(startAngleDeg);
-		END_ANGLE = (float) Math.toRadians(endAngleDeg);
-		AXIS = rotationAxis;
-		SLOPE = (END_ANGLE - START_ANGLE) / (TOTAL_STATES - 1);
-		DELTA_T = travelTime;
-		DELTA_Ta = DELTA_T/2.f;
-		theta = START_ANGLE;
-		thetaCurrent = START_ANGLE;
-		setSwitchRotation(AXIS, START_ANGLE); // Set switch and key to start angle
 		this.keyElement.setVisible(false);
+		setSwitchRotation(AXIS, thetaTarget); // Have to call again to set key angle
 	}
 	
 	public int getSwitchState(){

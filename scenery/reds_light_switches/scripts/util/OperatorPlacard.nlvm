@@ -1,0 +1,33 @@
+// Operator Placard Class NL2 Script
+// David Wolfe (Red-Thirten)
+// 9/23/2020
+// A Java class to provide common placard texture assignment functionality.
+// Licensed under GNU GPLv3 - See LICENSE for more details.
+
+package util;
+
+import com.nolimitscoaster.SceneObject;
+import com.nolimitscoaster.SceneObjectElement;
+
+public class OperatorPlacard{
+	private static final String PLACARD_PARAMETER_PREFIX = "placard";	// Prefix for all the placard parameters
+	
+	public static void setPlacardTextureFromScoParams(SceneObject sco, SceneObjectElement element){ // Sets the placard texture by scanning through all placard parameters for first match
+		if (sco == null || element == null) return; // Argument sanitation
+		
+		int index = 0;
+		Boolean curBool = sco.getBooleanParameter( PLACARD_PARAMETER_PREFIX + index );
+		
+		while ( curBool != null && curBool.boolValue() == false ){ // Go through all placard parameters (by number), until we hit the end or a positive match
+			index++;
+			curBool = sco.getBooleanParameter( PLACARD_PARAMETER_PREFIX + index );
+		}
+		
+		if (index == 0){ // If first option or none found, hide the placard element
+			element.setVisible(false);
+		}
+		else{ // Otherwise, set the texture accordingly
+			element.setTextureAnimationIndex(index);
+		}
+	}
+}

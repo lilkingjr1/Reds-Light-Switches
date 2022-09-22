@@ -1,10 +1,26 @@
-public class BinarySwitch extends LightSwitch{	
+/**Binary Switch NL2 LightSwitch**
+	Author: David Wolfe (Red-Thirten)
+	Date: 9/21/2022
+	Extends LightSwitch to handle placard and switch properties of the Binary Switch model.
+	Licensed under GNU GPLv3 - See LICENSE for more details.
+*/
+
+import util.OperatorPlacard;
+
+public class BinarySwitch extends LightSwitch{
+	private String PLACARD_ELEMENT_NAME = "placard";	// Name of the placard element in the SCO/model
+	
     public final bool onLateInit(){		
-        super.SCRIPT_NAME = "BinarySwitch";				// Script name for debugging
-		super.ON_ANGLE = 0.f;							// Angle from the model's original switch position to appear on
-		super.OFF_ANGLE = -45.f;						// Angle from the model's original switch position to appear off
-		super.SWITCH_TRAVEL_TIME = 0.4f;				// Time, in seconds, for the switch to travel ("speed")
-		super.AXIS = 2;									// Axis values: 0 = x, 1 = y, 2 = z
+        super.SCRIPT_NAME = "BinarySwitch";		// Script name for debugging
+		super.ON_ANGLE = 45.f;					// Angle from the model's original switch position to appear on
+		super.OFF_ANGLE = -45.f;				// Angle from the model's original switch position to appear off
+		super.SWITCH_TRAVEL_TIME = 0.4f;		// Time, in seconds, for the switch to travel ("speed")
+		super.AXIS = 2;							// Axis values: 0 = x, 1 = y, 2 = z
+		
+		OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
+			getScoFromParentEntity(),
+			super.getElementOnScoForName(getScoFromParentEntity(), PLACARD_ELEMENT_NAME)
+		);
 		
         return super.onLateInit();
     }

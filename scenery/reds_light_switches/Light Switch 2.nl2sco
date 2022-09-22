@@ -18,28 +18,28 @@
       <defaultvalue></defaultvalue>
       <id>lights_name1</id>
       <description>The shared name of light SCOs for this switch to control. All lights should have the same name (ie. &quot;station_switch&quot;, &quot;maitnence_switch&quot;, etc), Leave empty for passive mode.</description>
-      <label>Name of Lights to Control:</label>
+      <label>Switch 1 - Name of Lights to Control:</label>
     </scriptparameter>
     <scriptparameter>
       <type>string</type>
       <defaultvalue></defaultvalue>
       <id>lights_name2</id>
       <description>The shared name of light SCOs for this switch to control. All lights should have the same name (ie. &quot;station_switch&quot;, &quot;maitnence_switch&quot;, etc), Leave empty for passive mode.</description>
-      <label>Name of Lights to Control:</label>
+      <label>Switch 2 - Name of Lights to Control:</label>
     </scriptparameter>
     <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
       <id>initial_state1</id>
       <description>Should the switch initially start in the &quot;On&quot; position or not.</description>
-      <label>Start &quot;On&quot;</label>
+      <label>Switch 1 - Start &quot;On&quot;</label>
     </scriptparameter>
     <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
       <id>initial_state2</id>
       <description>Should the switch initially start in the &quot;On&quot; position or not.</description>
-      <label>Start &quot;On&quot;</label>
+      <label>Switch 2 - Start &quot;On&quot;</label>
     </scriptparameter>
     <scriptparameter>
       <type>double</type>

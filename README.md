@@ -1,9 +1,9 @@
-![Red's Light Switches](https://steamuserimages-a.akamaihd.net/ugc/1658978787080214701/889239368B7EA292E6C8EF572961640E4D9BD51F/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true)
+![Red's Light Switches](TODO-image-link)
 
 ___
 
 #### Description:
-"Red's Light Switches" is a No Limits 2 custom SCO package of various switches/controllers to control lights. Numerous different panel sizes and shapes, paired with 12 different types of highly detailed & scripted operators, each with countless configuration possibilities, means you can virtually build any panel you can think of. That, along with various extras like electrical panels, cable runners, etc; this pack is sure to add that extra level of realism to your park!
+"Red's Light Switches" is a No Limits 2 custom SCO package of various switches/controllers to control lights.
 
 ___
 
