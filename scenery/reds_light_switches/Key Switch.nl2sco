@@ -50,14 +50,14 @@
     </scriptparameter>
     <scriptparameter>
       <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_on.ogg</defaultvalue>
+      <defaultvalue>sounds/switch_key_on.ogg</defaultvalue>
       <id>switch_on_sfx_file</id>
       <description>Sound effect file to play when the switch is turned on.</description>
       <label>Switch On Sound Effect</label>
     </scriptparameter>
     <scriptparameter>
       <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_off.ogg</defaultvalue>
+      <defaultvalue>sounds/switch_key_off.ogg</defaultvalue>
       <id>switch_off_sfx_file</id>
       <description>Sound effect file to play when the switch is turned off.</description>
       <label>Switch Off Sound Effect</label>
