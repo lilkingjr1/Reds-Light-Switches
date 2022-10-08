@@ -1,9 +1,11 @@
 /**Key Switch NL2 LightSwitch**
 	Author: David Wolfe (Red-Thirten)
-	Date: 9/21/2022
+	Date: 10/08/2022
 	Extends LightSwitch to handle placard and switch properties of the Key Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
+
+import com.nolimitscoaster.SceneObjectElement;
 
 import util.OperatorSwitch;
 import util.OperatorPlacard;
@@ -21,27 +23,30 @@ public class KeySwitch extends LightSwitch{
 		super.SWITCH_TRAVEL_TIME = 0.6f;	// Time, in seconds, for the switch to travel ("speed")
 		super.AXIS = 2;						// Axis values: 0 = x, 1 = y, 2 = z
 		
-		OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
-			getScoFromParentEntity(),
-			super.getElementOnScoForName(getScoFromParentEntity(), PLACARD_ELEMENT_NAME)
-		);
-		
-        super.onLateInit();
-		
-		if (getElementOnScoForName(getScoFromParentEntity(), KEY_ELEMENT_NAME) == null) return false; // Check for key
-		super.switches[0] = new OperatorSwitch( // Setup key switch
-			getElementOnScoForName(getScoFromParentEntity(), SWITCH_ELEMENT_PREFIX + "1"),
-			2,
-			getScoFromParentEntity().getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
-			OFF_ANGLE,
-			ON_ANGLE,
-			AXIS,
-			SWITCH_TRAVEL_TIME,
-			getElementOnScoForName(getScoFromParentEntity(), KEY_ELEMENT_NAME),
-			KEY_TRAVEL_DIST,
-			false
-		);
-		
-		return (switches[0] != null);
+        if ( super.onLateInit() ){
+			OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
+				super.sco,
+				super.getElementOnScoForName(super.sco, PLACARD_ELEMENT_NAME)
+			);
+			
+			SceneObjectElement keyElement = super.getElementOnScoForName(super.sco, KEY_ELEMENT_NAME); // Get key element
+			if (keyElement == null) return false; // Check for key element
+			
+			super.switches[0] = new OperatorSwitch( // Setup key switch
+				super.getElementOnScoForName(super.sco, SWITCH_ELEMENT_PREFIX + "1"),
+				2,
+				super.sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
+				OFF_ANGLE,
+				ON_ANGLE,
+				AXIS,
+				SWITCH_TRAVEL_TIME,
+				keyElement,
+				KEY_TRAVEL_DIST,
+				false
+			);
+			
+			return (switches[0] != null);
+		}
+		else return false;
     }
 }

@@ -2,6 +2,7 @@
 <root>
   <sceneobject>
     <model path="models/light_switch2.dae"/>
+    <description>A scripted, animated wall switch (with 2 switches) for controlling lights.</description>
     <usercolor>
       <label>Cover Plate Color</label>
       <index>0</index>

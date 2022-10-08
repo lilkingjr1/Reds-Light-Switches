@@ -1,0 +1,32 @@
+/** Touch Panel Switch NL2 LightSwitch**
+	Author: David Wolfe (Red-Thirten)
+	Date: 10/08/2022
+	Extends LightSwitch to handle placard and switch properties of the Touch Panel Switch model.
+	Licensed under GNU GPLv3 - See LICENSE for more details.
+*/
+
+import util.OperatorTouchPanel;
+
+public class TouchPanelSwitch extends LightSwitch{
+	
+    public final bool onLateInit(){		
+        super.SCRIPT_NAME = "TouchPanelSwitch";		// Script name for debugging
+		super.CURSOR_SIZE = 0.175f;					// Ray cast hitbox size
+		
+        if ( super.onLateInit() ){
+			super.switches[0] = new OperatorTouchPanel( // Setup touch panel operator
+				super.getElementOnScoForName(super.sco, SWITCH_ELEMENT_PREFIX + "1"),
+				2,
+				super.sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
+				0.f,
+				0.f,
+				0,
+				0.f
+			);
+			
+			return (switches[0] != null);
+		}
+		else return false;
+    }
+	
+}

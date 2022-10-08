@@ -6,7 +6,7 @@
       <clip mesh="housing_nut" distance="5"/>
       <clip mesh="switch1" distance="15"/>
     </model>
-    <description>A scripted 30mm plastic switch, with customizable placard.</description>
+    <description>A scripted, animated 30mm plastic switch for controlling lights, with customizable placard.</description>
     <preview>textures/previews/switch.png</preview>
     <param basescalex="2"/>
     <param basescaley="2"/>

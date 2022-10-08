@@ -1,6 +1,6 @@
 /**Light Switch NL2 Script**
 	Author: David Wolfe (Red-Thirten)
-	Date: 9/21/2022
+	Date: 10/08/2022
 	Detects user input to switch, animates switch SCO, plays sounds, and controls the lights of specified SCOs in the simulation.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
@@ -23,12 +23,11 @@ public class LightSwitch extends Script{
 	protected float OFF_ANGLE = 75.f;							// Angle from the model's original switch position to appear off
 	protected float COOLDOWN = 0.25f;							// Cooldown (in seconds) before the switch can be switched again
 	protected float ACTIVE_DIST = 0.9f;							// Distance (in meters) between the player and the switch where the switch is active
-	protected float CURSOR_SIZE = 0.03f;						// 
+	protected float CURSOR_SIZE = 0.03f;						// Ray cast hitbox size
 	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time, in seconds, for the switch to travel ("speed")
 	protected int AXIS = 0;										// Axis values: 0 = x, 1 = y, 2 = z
 	
-	
-	private SceneObject sco;
+	protected SceneObject sco;	
 	private SceneObject[][] lightSCOs;
 	private SceneObjectElement[] cursors;
 	private Vector4f entColor = new Vector4f(1,1,1,0);
@@ -162,7 +161,7 @@ public class LightSwitch extends Script{
 		}
 		
 		if(sim.isViewerInsideSphere(sco.getTranslation(), ACTIVE_DIST)){
-			firstSwitchViewed = false;
+			firstSwitchViewed = false; // Prevents multiple switches from being viewed & clicked at the same time
 			for (int i = rays.length-1; i >= 0; --i){
 				if (!flipped && !firstSwitchViewed && rays[i].isViewerLookingAt(CURSOR_SIZE)){
 					cursors[i].setVisible(true);

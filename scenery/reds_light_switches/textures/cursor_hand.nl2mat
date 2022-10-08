@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <material>
+    <description>Cursor for Touch Panel Switch</description>
+    <preview>materials/hand_cursor.png</preview>
+    <renderpass>
+      <transparency mode="cutout"/>
+      <alphatest function="ge128"/>
+      <linearshading/>
+      <rgbgen mode="lighting"/>
+      <texunit>
+        <map>materials/hand_cursor.png</map>
+        <tcgen mode="base"/>
+      </texunit>
+    </renderpass>
+  </material>
+</root>
