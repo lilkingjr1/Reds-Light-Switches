@@ -1,0 +1,19 @@
+/**Breaker Switch NL2 LightSwitch**
+	Author: David Wolfe (Red-Thirten)
+	Date: 10/08/2022
+	Extends LightSwitch to handle switch properties of the Breaker Switch model.
+	Licensed under GNU GPLv3 - See LICENSE for more details.
+*/
+
+public class BreakerSwitch extends LightSwitch{
+	
+    public final bool onLateInit(){		
+        super.SCRIPT_NAME = "BreakerSwitch";	// Script name for debugging
+		super.ON_ANGLE = -90.f;					// Angle from the model's original switch position to appear on
+		super.OFF_ANGLE = 0.f;					// Angle from the model's original switch position to appear off
+		super.CURSOR_SIZE = 0.175f;				// Ray cast hitbox size
+		super.SWITCH_TRAVEL_TIME = 0.5f;			// Time, in seconds, for the switch to travel ("speed")
+		
+        return super.onLateInit();
+    }
+}

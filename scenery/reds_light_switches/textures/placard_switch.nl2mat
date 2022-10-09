@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <preview>placard/placard_running_lights.png</preview>
+    <preview>placard/placard_running_lights.jpg</preview>
     <renderpass>
       <shadercore>Roughness = 1;
 Specular = 0;
