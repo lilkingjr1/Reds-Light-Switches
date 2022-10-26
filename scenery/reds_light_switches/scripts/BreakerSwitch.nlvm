@@ -12,7 +12,7 @@ public class BreakerSwitch extends LightSwitch{
 		super.ON_ANGLE = -90.f;					// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = 0.f;					// Angle from the model's original switch position to appear off
 		super.CURSOR_SIZE = 0.175f;				// Ray cast hitbox size
-		super.SWITCH_TRAVEL_TIME = 0.5f;			// Time, in seconds, for the switch to travel ("speed")
+		super.SWITCH_TRAVEL_TIME = 0.5f;		// Time (in seconds) for the switch to travel ("speed")
 		
         return super.onLateInit();
     }

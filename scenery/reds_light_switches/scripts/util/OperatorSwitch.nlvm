@@ -50,13 +50,13 @@ public class OperatorSwitch{
 	
 	public OperatorSwitch(SceneObjectElement switchElement, int totalStates, int currentState, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime,
 			SceneObjectElement keyElement, float keyTravelDistance, bool keyStaysIn){ // Alternate object constructor, to support a key switch
-		this(switchElement, totalStates, currentState, startAngleDeg, endAngleDeg, rotationAxis, travelTime);
-		hasKey = true;
+		this(switchElement, totalStates, currentState, startAngleDeg, endAngleDeg, rotationAxis, travelTime); // Call default constructor
+		hasKey = true; // Setup key elements
 		this.keyElement = keyElement;
 		this.keyStaysIn = keyStaysIn;
 		KEY_DIST = keyTravelDistance;
 		this.keyElement.setVisible(false);
-		setSwitchRotation(AXIS, thetaTarget); // Have to call again to set key angle
+		setSwitchRotation(AXIS, thetaTarget); // Have to call again to set key angle properly
 	}
 	
 	public int getSwitchState(){

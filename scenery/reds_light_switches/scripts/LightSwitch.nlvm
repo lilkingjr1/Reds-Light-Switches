@@ -24,7 +24,7 @@ public class LightSwitch extends Script{
 	protected float COOLDOWN = 0.25f;							// Cooldown (in seconds) before the switch can be switched again
 	protected float ACTIVE_DIST = 0.9f;							// Distance (in meters) between the player and the switch where the switch is active
 	protected float CURSOR_SIZE = 0.03f;						// Ray cast hitbox size
-	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time, in seconds, for the switch to travel ("speed")
+	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time (in seconds) for the switch to travel ("speed")
 	protected int AXIS = 0;										// Axis values: 0 = x, 1 = y, 2 = z
 	
 	protected SceneObject sco;	
