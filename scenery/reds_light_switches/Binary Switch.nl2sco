@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <sceneobject>
-    <model path="models/switch.dae">
+    <model path="models/binary_switch.dae">
       <clip distance="30"/>
       <clip mesh="housing_nut" distance="5"/>
       <clip mesh="switch1" distance="15"/>

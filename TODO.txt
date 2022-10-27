@@ -1,2 +1,3 @@
-European Switch
 Electrical tower box
+Option to have lights flicker when they turn on
+Add delay-to-light-flip property to all switches
