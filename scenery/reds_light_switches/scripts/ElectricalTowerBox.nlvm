@@ -1,0 +1,23 @@
+/**Electrical Tower Box Switch NL2 LightSwitch**
+	Author: David Wolfe (Red-Thirten)
+	Date: 11/11/2022
+	Extends LightSwitch to handle switch properties of the Electrical Tower Box Switch model.
+	Licensed under GNU GPLv3 - See LICENSE for more details.
+*/
+
+public class ElectricalTowerBox extends LightSwitch{
+	
+    public final bool onLateInit(){		
+        super.SCRIPT_NAME = "ElectricalTowerBox";	// Script name for debugging
+		super.ON_ANGLE = 90.f;						// Angle from the model's original switch position to appear on
+		super.OFF_ANGLE = 0.f;						// Angle from the model's original switch position to appear off
+		super.COOLDOWN = 0.75f;						// Cooldown (in seconds) before the switch can be switched again
+		super.ACTIVE_DIST = 2.f;					// Distance (in meters) between the player and the switch where the switch is active
+		super.CURSOR_SIZE = 0.2f;					// Ray cast hitbox size
+		super.SWITCH_TRAVEL_TIME = 0.5f;			// Time (in seconds) for the switch to travel ("speed")
+		super.AXIS = 2;								// Axis values: 0 = x, 1 = y, 2 = z
+		
+        return super.onLateInit();
+    }
+	
+}

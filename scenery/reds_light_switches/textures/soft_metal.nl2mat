@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <material>
+    <renderpass>
+      <shadercore>Specular = tex0;</shadercore>
+      <transparency mode="opaque"/>
+      <linearshading/>
+      <custommaterial>
+        <diffuse r="0.678431" g="0.678431" b="0.678431"/>
+        <ambient r="0.678431" g="0.678431" b="0.678431"/>
+      </custommaterial>
+      <reflection affectedbyspecular="true" fresnelconst="0.3" fresnelvar="0.2"/>
+      <rgbgen mode="lighting"/>
+      <texunit>
+        <map>intern:data/textures/terrain/DiffuseCloudGray.jpg</map>
+        <tcgen mode="base"/>
+      </texunit>
+    </renderpass>
+  </material>
+</root>

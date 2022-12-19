@@ -1,3 +1,4 @@
-Electrical tower box
+Improve Electrical tower box
 Option to have lights flicker when they turn on
 Add delay-to-light-flip property to all switches
+Light sensor switch
