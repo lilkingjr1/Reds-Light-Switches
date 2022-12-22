@@ -1,6 +1,6 @@
 /**Light Switch NL2 Script**
 	Author: David Wolfe (Red-Thirten)
-	Date: 10/08/2022
+	Date: 12/21/2022
 	Detects user input to switch, animates switch SCO, plays sounds, and controls the lights of specified SCOs in the simulation.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
@@ -10,10 +10,10 @@ import com.nolimitscoaster.SceneObject;
 import com.nolimitscoaster.SceneObjectElement;
 import com.nolimitscoaster.StaticSound;
 import com.nolimitscoaster.Button;
-import nlvm.math3d.Vector4f;
 
 import util.RayCast;
 import util.OperatorSwitch;
+import util.LightGroup;
 
 public class LightSwitch extends Script{	
 	protected String SCRIPT_NAME = "LightSwitch";				// Script name for debugging
@@ -27,33 +27,28 @@ public class LightSwitch extends Script{
 	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time (in seconds) for the switch to travel ("speed")
 	protected int AXIS = 0;										// Axis values: 0 = x, 1 = y, 2 = z
 	
-	protected SceneObject sco;	
-	private SceneObject[][] lightSCOs;
+	protected SceneObject sco;
 	private SceneObjectElement[] cursors;
-	private Vector4f entColor = new Vector4f(1,1,1,0);
 	private StaticSound soundOn, soundOff;
 	
-	private bool flipped, entColorEnabled, firstSwitchViewed = false;
-	private float curTime, curCooldownTime, overrideInterval = 0.f;
+	private bool flipped, firstSwitchViewed = false;
+	private float curCooldownTime = 0.f;
 	
 	private RayCast[] rays;
-    protected OperatorSwitch[] switches;
+	protected OperatorSwitch[] switches;
+	protected LightGroup[] switchLights;
 	
 	public bool onLateInit(){ // On initialization of Play simulation
 		sco = getScoFromParentEntity(); // Get and assign local sco
-		
-		// Get overrideInterval value as a "watchdog" backup to further enforce switch and light synchronization
-		overrideInterval = sco.getDoubleParameter("override_interval").floatValue();
-		entColorEnabled = !sco.getBooleanParameter("disable_ent_color").boolValue();
 		
 		int numSwitches = 1;
 		if (getElementOnScoForName(sco, SWITCH_ELEMENT_PREFIX + numSwitches) == null) return false; // Check for at least one switch
 		while (sco.getElementForName(SWITCH_ELEMENT_PREFIX + numSwitches) != null) numSwitches++; // Find number of switches
 		--numSwitches;
-		lightSCOs = new SceneObject[numSwitches][]; // Initialize arrays
-		cursors = new SceneObjectElement[numSwitches];
-		switches = new OperatorSwitch[numSwitches];
+		cursors = new SceneObjectElement[numSwitches]; // Initialize arrays
 		rays = new RayCast[numSwitches];
+		switches = new OperatorSwitch[numSwitches];
+		switchLights = new LightGroup[numSwitches];
 		
 		for (int i = 0; i < numSwitches; i++){ // Iterate through switches for setup			
 			SceneObjectElement switchElem = sco.getElementForName(SWITCH_ELEMENT_PREFIX + (i+1));
@@ -75,17 +70,25 @@ public class LightSwitch extends Script{
 			
 			rays[i] = new RayCast(switchElem); // Setup rays
 			
-			// Get array of light SCOs and validate
+			// Setup light groups
 			String lightsName = sco.getStringParameter("lights_name" + (i+1));
 			if (lightsName.length() > 0){
-				lightSCOs[i] = sim.getSceneObjectsWithName(lightsName);
-				if (lightSCOs[i].length == 0){
+				SceneObject[] lightSCOs = sim.getSceneObjectsWithName(lightsName);
+				if (lightSCOs.length != 0){
+					switchLights[i] = new LightGroup(
+						lightSCOs,
+						SWITCH_TRAVEL_TIME / 2,
+						sco.getDoubleParameter("flicker_time").floatValue(),
+						sco.getDoubleParameter("override_interval").floatValue(),
+						!sco.getBooleanParameter("disable_ent_color").boolValue(),
+						(switches[i].getSwitchState() != 0)
+					);
+				}
+				else{
 					System.err.println(SCRIPT_NAME + ": (Switch " + (i+1) + ") Could not find any light SCOs with the name \"" + lightsName + "\"!");
 					return false;
 				}
 			}
-			// Attempt to set lights to match switch state (even though their script will likely override it in the first few seconds of simulation...)
-			setLightsState(lightSCOs[i], (switches[i].getSwitchState() != 0));
 		}
 		
 		// Set up on and off sounds effects
@@ -126,32 +129,8 @@ public class LightSwitch extends Script{
         }
         return element;
     }
-	
-	private void setLightsState(SceneObject[] lights, bool state){
-		if (lights != null){
-			for (int i = lights.length-1; i >= 0; --i){
-				for (int j = lights[i].getLightCount()-1; j >= 0; --j){
-					lights[i].getLightAt(j).setEnabled(state);
-				}
-				if (entColorEnabled){
-					entColor.w = state ? 1.f : 0.f;
-					lights[i].setEntityColor(entColor);
-				}
-			}
-		}
-	}
 
 	public void onNextFrame(float tick){
-		if (overrideInterval > 0.f){
-			curTime = curTime + tick;
-			if (curTime > overrideInterval){
-				curTime = 0.f;
-				for (int i = lightSCOs.length-1; i >= 0; --i){
-					setLightsState(lightSCOs[i], (switches[i].getSwitchState() != 0));
-				}
-			}
-		}
-		
 		if (flipped){
 			curCooldownTime = curCooldownTime + tick;
 			if (curCooldownTime > COOLDOWN){
@@ -166,18 +145,17 @@ public class LightSwitch extends Script{
 				if (!flipped && !firstSwitchViewed && rays[i].isViewerLookingAt(CURSOR_SIZE)){
 					cursors[i].setVisible(true);
 					if (Button.isPressed(Button.ACTION)){
-						if (switches[i].getSwitchState() != 0) switches[i].setSwitchState(0); else switches[i].setSwitchState(1);
-						
 						if (switches[i].getSwitchState() != 0){
-							setLightsState(lightSCOs[i], true);
-							soundOn.setPosition(switches[i].getSwitchAbsTrans());
-							soundOn.play();
-						}
-						else{
-							setLightsState(lightSCOs[i], false);
+							switches[i].setSwitchState(0);
 							soundOff.setPosition(switches[i].getSwitchAbsTrans());
 							soundOff.play();
 						}
+						else{
+							switches[i].setSwitchState(1);
+							soundOn.setPosition(switches[i].getSwitchAbsTrans());
+							soundOn.play();
+						}
+						if (switchLights[i] != null) switchLights[i].toggleLights();
 						flipped = true;
 					}
 					firstSwitchViewed = true;
@@ -188,8 +166,9 @@ public class LightSwitch extends Script{
 			}
 		}
 		
-		for (int i = switches.length-1; i >= 0; --i){ // Run each switch object's onNextFrame() to animate
+		for (int i = switches.length-1; i >= 0; --i){ // Run each switch and switchLight objects' onNextFrame() to animate
 			switches[i].onNextFrame(tick);
+			if (switchLights[i] != null) switchLights[i].onNextFrame(tick);
 		}
 	}	
 }

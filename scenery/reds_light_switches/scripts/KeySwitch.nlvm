@@ -1,6 +1,6 @@
 /**Key Switch NL2 LightSwitch**
 	Author: David Wolfe (Red-Thirten)
-	Date: 10/08/2022
+	Date: 12/21/2022
 	Extends LightSwitch to handle placard and switch properties of the Key Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
@@ -45,6 +45,9 @@ public class KeySwitch extends LightSwitch{
 				KEY_TRAVEL_DIST,
 				false
 			);
+
+			// Adjust delay time to account for key animation
+			super.switchLights[0].setDelayTime(SWITCH_TRAVEL_TIME * 1.5f);
 			
 			return (switches[0] != null);
 		}
