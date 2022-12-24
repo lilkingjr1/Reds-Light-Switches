@@ -1,11 +1,14 @@
 /**Breaker Switch NL2 LightSwitch**
 	Author: David Wolfe (Red-Thirten)
-	Date: 10/08/2022
+	Date: 12/23/2022
 	Extends LightSwitch to handle switch properties of the Breaker Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
 
+import com.nolimitscoaster.Coaster;
+
 public class BreakerSwitch extends LightSwitch{
+	private Coaster coaster;
 	
     public final bool onLateInit(){		
         super.SCRIPT_NAME = "BreakerSwitch";	// Script name for debugging
@@ -15,6 +18,23 @@ public class BreakerSwitch extends LightSwitch{
 		super.CURSOR_SIZE = 0.175f;				// Ray cast hitbox size
 		super.SWITCH_TRAVEL_TIME = 0.5f;		// Time (in seconds) for the switch to travel ("speed")
 		
-        return super.onLateInit();
+        if ( super.onLateInit() ){
+			coaster = super.sco.getCoasterParameter("estop_coaster");
+			return true;
+		}
+		else return false;
     }
+	
+	public void onNextFrame(float tick){
+		super.onNextFrame(tick);
+		
+		if (coaster != null){
+			if (super.switches[0].getSwitchState() == 0 && !coaster.isEmergencyStop()){
+				coaster.setEmergencyStop(true);
+			}
+			else if (super.switches[0].getSwitchState() == 1 && coaster.isEmergencyStop()){
+				coaster.setEmergencyStop(false);
+			}
+		}
+	}
 }

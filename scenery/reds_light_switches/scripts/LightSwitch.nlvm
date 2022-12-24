@@ -100,13 +100,13 @@ public class LightSwitch extends Script{
 		}
 		
 		soundOn.setDistanceParameters(1.f, 1.f);
-		soundOn.setGain(0.5f);
+		soundOn.setGain(1.f);
 		soundOn.setPitch(1.f);
 		soundOn.setDopplerMode(false);
 		soundOn.setEnvironmentMode(StaticSound.E_ENVMODE_LOCAL);
 		
 		soundOff.setDistanceParameters(1.f, 1.f);
-		soundOff.setGain(0.5f);
+		soundOff.setGain(1.f);
 		soundOff.setPitch(1.f);
 		soundOff.setDopplerMode(false);
 		soundOff.setEnvironmentMode(StaticSound.E_ENVMODE_LOCAL);

@@ -45,6 +45,12 @@
       <label>Override Interval (Seconds):</label>
     </scriptparameter>
     <scriptparameter>
+      <type>coaster</type>
+      <id>estop_coaster</id>
+      <description>Will simulate cutting power to the specified coaster by emergency stopping it when the switch is turned off. Set to &quot;&lt;None&gt;&quot; to disable.</description>
+      <label>Coaster to E-Stop when Switched Off</label>
+    </scriptparameter>
+    <scriptparameter>
       <type filetype="audio">resourcepath</type>
       <defaultvalue>sounds/switch_breaker.ogg</defaultvalue>
       <id>switch_on_sfx_file</id>

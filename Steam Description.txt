@@ -26,7 +26,7 @@ Comment below if there is a specific switch style you would like to see added to
     [*]Switches can be used purely aesthetically and do not have to be connected to any lights if desired.
     [*]Choose if the switch & lights should be on or off when the simulation starts.
     [*]Choose an optional amount of time for the lights to flicker/warm up when the switch is turned on.
-    [*]Choose an optional sound effect for the switch to play when it is turned on or off, or use the default sounds included with the pack.
+    [*]Choose a sound effect for the switch to play when it is turned on or off, or use the default sounds included with the pack.
     [*]For the breaker switches, choose an optional coaster to E-Stop when the switch is turned off.
     [*]Choose an optional override interval that will force the light(s) to match the switch's state, even if the light's own script told it to do otherwise (ex. vanilla lights turn on at night even though the switch is set to off).
 [/list]

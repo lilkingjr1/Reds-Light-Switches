@@ -6,8 +6,8 @@
       <transparency mode="opaque"/>
       <linearshading/>
       <custommaterial>
-        <diffuse r="0.678431" g="0.678431" b="0.678431"/>
-        <ambient r="0.678431" g="0.678431" b="0.678431"/>
+        <diffuse r="0.65098" g="0.65098" b="0.65098"/>
+        <ambient r="0.65098" g="0.65098" b="0.65098"/>
       </custommaterial>
       <reflection affectedbyspecular="true" fresnelconst="0.3" fresnelvar="0.2"/>
       <rgbgen mode="lighting"/>
