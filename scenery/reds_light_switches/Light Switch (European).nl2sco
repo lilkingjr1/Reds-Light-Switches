@@ -3,6 +3,7 @@
   <sceneobject>
     <model path="models/light_switch_euro.dae"/>
     <description>A scripted, animated, European style wall switch for controlling lights.</description>
+    <preview>textures/previews/euro_switch.png</preview>
     <usercolor>
       <label>Cover Plate Color</label>
       <index>0</index>

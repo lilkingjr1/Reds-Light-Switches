@@ -3,6 +3,7 @@
   <sceneobject>
     <model path="models/light_switch4_lid.dae"/>
     <description>A scripted, animated wall-mounted box switch (with 4 switches) for controlling lights.</description>
+    <preview>textures/previews/four_switch_box.png</preview>
     <param basescalex="1.25"/>
     <param basescaley="1.25"/>
     <param basescalez="1.25"/>

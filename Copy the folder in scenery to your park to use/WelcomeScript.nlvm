@@ -1,0 +1,22 @@
+/**
+	Pack Welcome NL2 Script
+	David Wolfe (Red-Thirten)
+	12/23/2022
+	Thanks the user for downloading the pack, informs them of the README, and encourages them to look at the different switch settings.
+*/
+
+import com.nolimitscoaster.Script;
+
+public class WelcomeScript extends Script{
+	public bool onInit(){ // On initialization of Play simulation
+		if (false){ // Enable or disable message
+			System.err.println("HEY! No error! Just wanted to thank you very much for downloading my Light Switches pack!");
+			System.err.println("If you have any questions, please check out the README.html in \\scenery\\reds_light_switches.");
+			System.err.println("I recommend checking out the double-click settings of all the different switches in the editor.");
+			System.err.println("\nHappy Switching! :D");
+			System.err.println(" -- Red-Thirten");
+		}
+		
+		return false; // Return false to prevent Script's `onNextFrame()` running needlessly
+	}
+}

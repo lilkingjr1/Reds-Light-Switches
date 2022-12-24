@@ -7,6 +7,7 @@
       <clip mesh="shield" distance="15"/>
     </model>
     <description>A scripted, animated shunt trip saftey switch for controlling lights.</description>
+    <preview>textures/previews/breaker_switch.png</preview>
     <usercolor>
       <label>Handle Color</label>
       <index>0</index>

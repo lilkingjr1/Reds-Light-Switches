@@ -1,0 +1,118 @@
+<html>
+	<body style="font-family:Segoe UI; font-size:18px">
+		<img src="textures\previews\overview.jpg" alt="Header Image" width="30%" height="35%">
+		<h4><i>
+			Red's Light Switches<br>
+			©2022 David W. (Red-Thirten)<br>
+			<a href="mailto:rehlmgaming@gmail.com">rehlmgaming@gmail.com</a><br>
+			Version 1.0, 23 December 2022<br>
+			NL2 Scenery Custom Object (SCO) Package<br>
+		</h4></i>
+		<p>
+			Thank you very much for downloading my Light Switches pack!
+		</p>
+		<p>
+			While this pack is completely free, if you like what you see, if you appreciate the months of hard work that went into making it,<br>
+			any donation amount made to the PayPal link below will not only be greatly appreciated, but will help me make more content like this in the future!<br>
+			<form action="https://www.paypal.com/donate" method="post" target="_blank">
+				<input type="hidden" name="hosted_button_id" value="LT9DY39634NGL" />
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+				<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+			</form>
+		</p>
+		<p>
+			All parts of this pack (models, scripts, etc.) are licensed under the <b>GNU General Public License v3.0.</b><br>
+			Please see the <a href="#usage">"Usage / License" section</a> at the end of this README, or the LICENSE file, for more details on your rights to use this pack in your parks.
+		</p>
+		<hr>
+		<h3>
+			<u>How to Use:</u>
+		</h3>
+		<ol style="line-height: 1.7;">
+			<li>Place a switch of your choosing in the editor and double-click it to open up it's settings.</li>
+			<li>Customize colors if desired.</li>
+			<li>Under "Name of Lights to Control", type in a name of your choosing. I recommend typing a name that describes the type or location of the switch to keep things organized (ie. "keySwitch" or "backDoor").</li>
+				<ul><li>If you want the switch to be passive and not control any lights, simply leave "Name of Lights to Control" empty.</li></ul>
+			<li>Then, for all the lights you want the switch to control, double-click them and change their name to the name you chose in step 3.</li>
+		</ol>
+		<h5>The following additional switch settings can also be set:</h5>
+		<ul style="line-height: 1.7;">
+			<li>Start "On": Will make the switch (and connected lights) start in the on position when the simulation starts.</li>
+			<li>Flicker Time (Seconds): Amount of time lights will flicker / warm up after being turned on. Set to 0 to disable.</li>
+			<li>Override Interval (Seconds): How often to set the current state of the switch to all lights. "0" disables. Attempts to keep lights with their own on/off scripts "synced up" to the switch. Values close to 0 may cause lag.</li>
+			<li>Switch On/Off Sound Effects: Sound effect file to play when the switch is turned on or off.</li>
+			<li>Disable Entity Color Changing: Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully "off"). Useful if colors or textures are being negatively affected on 3rd party lights.</li>
+		</ul>
+		<hr>
+		<h3>
+			<u>Compatibility:</u>
+		</h3>
+		<ul style="line-height: 1.5;">
+			<li>All vanilla NL2 scenery object lights.</li>
+			<li>Any un-scripted 3rd party custom scenery objects (SCOs) with any amount of lights.</li>
+			<li><i>Most</i> scripted 3rd party lights (ie. animated lights, track lights, etc.) can be made to work with the right settings, but results will vary. The switch's "Override Interval" and "Disable Entity Color Changing" settings can be used in effort to increase compatibility.</li>
+			<li>Coaster running lights unfortunately cannot be controlled due to NL2 limitations.</li>
+		</ul>
+		<hr>
+		<h3>
+			<u>Known Issues:</u>
+		</h3>
+		<ul style="line-height: 1.5;">
+			<li>Different lights within a single SCO unfortunately cannot be controlled separately by two different switches at this time. Use two separate SCOs to work around this.</li>
+			<li>If an override interval is set, multiple switches cannot be "wired in series" with each other to control the same group of lights (flickering will occur). If the interval is disabled, multiple switches <i>can</i> control the same group of lights, but the switches' current state will temporarily de-sync until it is flipped again.</li>
+		</ul>
+		<hr>
+		<h3>
+			<u>Change Log:</u>
+		</h3>
+		<ul>
+			<li>[v1.0]
+				<ul>
+					<li>Initial release! 🙂</li>
+				</ul>
+			</li>
+		</ul>
+		<hr>
+		<h3>
+			<u>Credits / Acknowledgment:</u>
+		</h3>
+		<ul style="line-height: 2;">
+			<li><b>RobbinBob</b> -- Provided a texture for the Four Switch Box</li>
+			<li><b>Coastin' Dave</b> -- Switch ideas, beta testing, and feedback</li>
+			<li><b>Waldo Lahr</b> -- Beta testing and feedback</li>
+			<li><b>lukesku11</b> -- Beta testing and feedback</li>
+		</ul>
+		<hr>
+		<h3 id="usage">
+			<u>Usage / License:</u>
+		</h3>
+		<p>
+			Like mentioned before, this pack is licensed under the <b>GNU General Public License v3.0</b> (GNU GPLv3).<br>
+			The <code>LICENSE</code> file can be found in <code>\scenery\reds_light_switches</code>
+		</p>
+		<p>
+			<b>"But what the heck does that mean Red? <i>Legalese scares me...</i>"</b>
+		</p>
+		<p>
+			<u>No worries! Here's an easy break down to help you meet the requirements:</u> 😊<br>
+			<ul style="line-height: 2;">
+				<li>First off, a great summary of what you can and can't do with the pack <a href="https://choosealicense.com/licenses/gpl-3.0/" target="_blank">can be found here</a>.</li>
+				<li>
+					You are totally free to use this pack in any of your parks that you plan to share with other people (ie. Steam Workshop, forums, etc.)<br>
+					<b>as long as you...</b>
+					<ul>
+						<li>Keep the <code>LICENSE</code> file in-tact and present within the pack's files.</li>
+						<li>This includes when you package the park into a <code>.nl2pkg</code> file (however, the SCOs should automatically package it with them, so no worries about having to do it manually).</li>
+						<li>Crediting the pack and the author in your project or project's description is not <i>technically</i> required by the license, but is greatly appreciated.</li>
+					</ul>
+				</li>
+				<li>The license requires that all source code must be disclosed and available. That <i>technically</i> means locked/encrypted <code>.nl2pkg</code>'s break the license. <b>However</b>, I am willing to ignore this requirement <b>as long as the pack and author are properly credited</b>, visible outside of the locked package.</li>
+				<li>You may modify and improve any part of the pack you would like, as long as the license stays in-tact and changes remain available to the public. <b>This includes locked/encrypted <code>.nl2pkg</code>'s</b>; meaning, no, modified works of this package are not allowed to be encrypted! If you have an addition you would like made to the original pack to be used in a private park, please feel free to contact me and I will gladly look into adding it.</li>
+				<li>Lastly, you can <i>technically</i> redistribute modified versions of this pack if you really want to, but I would much rather prefer you provide improvements to me so I can incorporate them into the official/original pack. You will be be credited too! I promise! 😉
+			</ul>
+		</p>
+		<hr>
+		<br>
+		<h6>Wow, you really read the whole thing didn't you? I'm so proud of you; here's a cookie 🍪</h6>
+	</body>
+</html>

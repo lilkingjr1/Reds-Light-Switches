@@ -3,7 +3,7 @@
   <sceneobject>
     <model path="models/electrical_tower_box.dae"/>
     <description>A scripted, animated 30mm plastic switch for controlling lights, with customizable placard.</description>
-    <preview>textures/materials/vent.jpg</preview>
+    <preview>textures/previews/electrical_tower_box.png</preview>
     <param lockonterrain="true"/>
     <usercolor>
       <label>Switch Color</label>

@@ -6,6 +6,7 @@
       <clip distance="50"/>
     </model>
     <description>A scripted touch panel switch for controlling lights.</description>
+    <preview>textures/previews/touch_panel_switch.png</preview>
     <usercolor>
       <label>Enclosure Color</label>
       <index>0</index>

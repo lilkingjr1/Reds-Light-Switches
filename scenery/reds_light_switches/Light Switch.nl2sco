@@ -3,6 +3,7 @@
   <sceneobject>
     <model path="models/light_switch.dae"/>
     <description>A scripted, animated wall switch for controlling lights.</description>
+    <preview>textures/previews/light_switch.png</preview>
     <usercolor>
       <label>Cover Plate Color</label>
       <index>0</index>

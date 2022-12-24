@@ -1,4 +1,4 @@
-![Red's Light Switches](TODO-image-link)
+![Red's Light Switches](/scenery/reds_light_switches/textures/previews/overview.jpg?raw=true)
 
 ___
 
