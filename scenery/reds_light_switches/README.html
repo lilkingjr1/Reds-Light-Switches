@@ -60,12 +60,19 @@
 		<ul style="line-height: 1.5;">
 			<li>Different lights within a single SCO unfortunately cannot be controlled separately by two different switches at this time. Use two separate SCOs to work around this.</li>
 			<li>If an override interval is set, multiple switches cannot be "wired in series" with each other to control the same group of lights (flickering will occur). If the interval is disabled, multiple switches <i>can</i> control the same group of lights, but the switches' current state will temporarily de-sync until it is flipped again.</li>
+			<li>Flicker should be disabled when controlling 3rd party lights that change color over time. Otherwise, the switch may change the light(s) to an undesired color.</li>
 		</ul>
 		<hr>
 		<h3>
 			<u>Change Log:</u>
 		</h3>
 		<ul>
+			<li>[v1.1]
+				<ul>
+					<li>Improved compatibility with scripted 3rd party lights that change color over time by preventing local changes to color when it is not needed (ie. when flicker is disabled).</li>
+					<li>Changed color/intensity handling to the linear color space so it is less error prone.</li>
+				</ul>
+			</li>
 			<li>[v1.0]
 				<ul>
 					<li>Initial release! 🙂</li>
