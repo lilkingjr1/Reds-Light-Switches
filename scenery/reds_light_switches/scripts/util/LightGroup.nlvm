@@ -1,6 +1,6 @@
 /**Light Group NL2 Class**
 	Author: David Wolfe (Red-Thirten)
-	Date: 12/21/2022
+	Date: 12/24/2022
 	A Java object representing a group of SCOs with lights that can have the state of their lights changed over time.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 
@@ -46,7 +46,7 @@ public class LightGroup{
             ORIG_LIGHT_COLORS[i] = new Vector3f[SCOS[i].getLightCount()];
             for (int j = 0; j < SCOS[i].getLightCount(); j++){
                 ORIG_LIGHT_COLORS[i][j] = new Vector3f();
-                SCOS[i].getLightAt(j).getColor(ORIG_LIGHT_COLORS[i][j]);
+                SCOS[i].getLightAt(j).getColorLinear(ORIG_LIGHT_COLORS[i][j]);
             }
         }
 
@@ -105,14 +105,16 @@ public class LightGroup{
         for (int i = SCOS.length-1; i >= 0; --i){
             for (int j = SCOS[i].getLightCount()-1; j >= 0; --j){
                 if (intensity > 0){
-                    if (SCOS[i].getLightAt(j).isEnabled() == false)
+                    if (!SCOS[i].getLightAt(j).isEnabled())
                         SCOS[i].getLightAt(j).setEnabled(true);
 
-                    SCOS[i].getLightAt(j).setColor(
-                        ORIG_LIGHT_COLORS[i][j].x * intensity,
-                        ORIG_LIGHT_COLORS[i][j].y * intensity,
-                        ORIG_LIGHT_COLORS[i][j].z * intensity
-                    );
+                    if (FLICKER_TIME > 0){
+                        SCOS[i].getLightAt(j).setColorLinear(
+                            ORIG_LIGHT_COLORS[i][j].x * intensity,
+                            ORIG_LIGHT_COLORS[i][j].y * intensity,
+                            ORIG_LIGHT_COLORS[i][j].z * intensity
+                        );
+                    }
                 }
                 else{
                     SCOS[i].getLightAt(j).setEnabled(false);
