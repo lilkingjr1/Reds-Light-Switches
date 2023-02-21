@@ -23,8 +23,15 @@
       <type>string</type>
       <defaultvalue></defaultvalue>
       <id>lights_name1</id>
-      <description>The shared name of light SCOs for this switch to control. All lights should have the same name (ie. &quot;station_switch&quot;, &quot;maitnence_switch&quot;, etc), Leave empty for passive mode.</description>
+      <description>The shared name of light SCOs for this switch to control. All lights should have the same name (ie. &quot;station_switch&quot;, &quot;maitnence_switch&quot;, etc). Leave empty for passive mode.</description>
       <label>Name of Lights to Control:</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>string</type>
+      <defaultvalue></defaultvalue>
+      <id>lights_name_inv1</id>
+      <description>Similar to the list above, but this group of lights will be OPPOSITE of the switch state. Good for &quot;emergency lights&quot; that turn on when the power goes out. Leave empty for passive mode.</description>
+      <label>Name of Lights to Control (Inverse):</label>
     </scriptparameter>
     <scriptparameter>
       <type>bool</type>

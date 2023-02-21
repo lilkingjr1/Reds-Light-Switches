@@ -21,7 +21,7 @@ public class BinarySwitch extends LightSwitch{
         if ( super.onLateInit() ){
 			OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
 				super.sco,
-				super.getElementOnScoForName(super.sco, PLACARD_ELEMENT_NAME)
+				super.sco.getElementForName(PLACARD_ELEMENT_NAME)
 			);
 			
 			return true;

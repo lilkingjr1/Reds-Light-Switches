@@ -27,14 +27,17 @@ public class KeySwitch extends LightSwitch{
         if ( super.onLateInit() ){
 			OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
 				super.sco,
-				super.getElementOnScoForName(super.sco, PLACARD_ELEMENT_NAME)
+				super.sco.getElementForName(PLACARD_ELEMENT_NAME)
 			);
 			
-			SceneObjectElement keyElement = super.getElementOnScoForName(super.sco, KEY_ELEMENT_NAME); // Get key element
-			if (keyElement == null) return false; // Check for key element
+			SceneObjectElement keyElement = super.sco.getElementForName(KEY_ELEMENT_NAME); // Get key element
+			if (keyElement == null){ // Check for key element
+				System.err.println(SCRIPT_NAME + ": Wrong 3d model loaded (Cannot find \"" + KEY_ELEMENT_NAME + "\" element)");
+				return false;
+			}
 			
 			super.switches[0] = new OperatorSwitch( // Setup key switch
-				super.getElementOnScoForName(super.sco, SWITCH_ELEMENT_PREFIX + "1"),
+				super.sco.getElementForName(SWITCH_ELEMENT_PREFIX + "1"),
 				2,
 				super.sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
 				OFF_ANGLE,

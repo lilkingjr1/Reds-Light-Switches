@@ -29,6 +29,7 @@ Comment below if there is a specific switch style you would like to see added to
     [*]Choose a sound effect for the switch to play when it is turned on or off, or use the default sounds included with the pack.
     [*]For the breaker switches, choose an optional coaster to E-Stop when the switch is turned off.
     [*]Choose an optional override interval that will force the light(s) to match the switch's state, even if the light's own script told it to do otherwise (ex. vanilla lights turn on at night even though the switch is set to off).
+	[*][NEW] Breaker-style switches have an extra "inverse" light group setting that can allow for certain lights to turn on when the switch is off (like "emergency lights").
 [/list]
 
 A README.html (that you can open in your browser) with details on how to use the pack is also included with the pack.

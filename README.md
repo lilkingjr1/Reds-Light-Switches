@@ -9,6 +9,6 @@ ___
 
 #### Notes:
 
-- This repository is mainly to help with versioning. Easier places to download this pack are either the [Steam Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=2325974526) or the [NoLimits Central page](https://nolimitscentral.com/exchange/park/1476).
+- This repository is mainly to help with versioning. Easier places to download this pack are either the [Steam Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=2905888419) or the [NoLimits Central page](https://nolimitscentral.com/exchange/park/2323).
 - A more complete README with instructions on how to use the pack can be found here:
   - `\scenery\reds_light_switches\README.html`

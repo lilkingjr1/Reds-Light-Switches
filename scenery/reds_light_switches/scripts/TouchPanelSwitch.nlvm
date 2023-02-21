@@ -15,7 +15,7 @@ public class TouchPanelSwitch extends LightSwitch{
 		
         if ( super.onLateInit() ){
 			super.switches[0] = new OperatorTouchPanel( // Setup touch panel operator
-				super.getElementOnScoForName(super.sco, SWITCH_ELEMENT_PREFIX + "1"),
+				super.sco.getElementForName(SWITCH_ELEMENT_PREFIX + "1"),
 				2,
 				super.sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
 				0.f,
