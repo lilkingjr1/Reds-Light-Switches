@@ -3,9 +3,9 @@
 		<img src="textures\previews\overview.jpg" alt="Header Image" width="30%" height="35%">
 		<h4><i>
 			Red's Light Switches<br>
-			©2022 David W. (Red-Thirten)<br>
+			©2023 David W. (Red-Thirten)<br>
 			<a href="mailto:rehlmgaming@gmail.com">rehlmgaming@gmail.com</a><br>
-			Version 1.0, 23 December 2022<br>
+			Version 1.2, 20 February 2023<br>
 			NL2 Scenery Custom Object (SCO) Package<br>
 		</h4></i>
 		<p>
@@ -67,6 +67,14 @@
 			<u>Change Log:</u>
 		</h3>
 		<ul>
+			<li>[v1.2]
+				<ul>
+					<li>Update Electrical Tower Box model to have on and off symbols.</li>
+					<li>Add inverse light group functionality to Breaker Switches to allow "emergency light" options.</li>
+					<li>Refactor <code>BreakerSwitch</code> class to be its own base class.</li>
+					<li>Refactor various classes to remove dependency on <code>getScoFromParentEntity()</code> and <code>getElementOnScoForName()</code> functions.</li>
+				</ul>
+			</li>
 			<li>[v1.1]
 				<ul>
 					<li>Improved compatibility with scripted 3rd party lights that change color over time by preventing local changes to color when it is not needed (ie. when flicker is disabled).</li>

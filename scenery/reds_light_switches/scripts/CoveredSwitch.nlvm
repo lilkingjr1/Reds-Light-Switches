@@ -26,8 +26,11 @@ public class CoveredSwitch extends LightSwitch{
 		super.ACTIVE_DIST = 0.9f;				// Distance (in meters) between the player and the switch where the switch is active
 		
         if ( super.onLateInit() ){
-			lid = super.getElementOnScoForName(super.sco, LID_ELEMENT_NAME); // Initialize and setup lid
-			if (lid == null) return false;
+			lid = super.sco.getElementForName(LID_ELEMENT_NAME); // Initialize and setup lid
+			if (lid == null){
+				System.err.println(SCRIPT_NAME + ": Wrong 3d model loaded (Cannot find \"" + LID_ELEMENT_NAME + "\" element)");
+				return false;
+			}
 			lid.setRotation((float) LID_CLOSED_ANGLE, 0.f, 0.f);
 			
 			return true;
