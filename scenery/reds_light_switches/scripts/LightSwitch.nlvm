@@ -9,20 +9,20 @@ import com.nolimitscoaster.Script;
 import com.nolimitscoaster.SceneObject;
 import com.nolimitscoaster.SceneObjectElement;
 import com.nolimitscoaster.StaticSound;
-import com.nolimitscoaster.Button;
+import com.nolimitscoaster.InteractionActionListener;
+import com.nolimitscoaster.InteractionObject;
 
-import util.RayCast;
 import util.OperatorSwitch;
 import util.LightGroup;
 
-public class LightSwitch extends Script{	
+public class LightSwitch extends Script implements InteractionActionListener{	
 	protected String SCRIPT_NAME = "LightSwitch";				// Script name for debugging
 	protected String SWITCH_ELEMENT_PREFIX = "switch";			// Prefix of the switch element names in the SCO/model
 	protected String CURSOR_ELEMENT_PREFIX = "cursor";			// Prefix of the cursor element names in the SCO/model
 	protected float ON_ANGLE = 0.f;								// Angle from the model's original switch position to appear on
 	protected float OFF_ANGLE = 75.f;							// Angle from the model's original switch position to appear off
 	protected float COOLDOWN = 0.25f;							// Cooldown (in seconds) before the switch can be switched again
-	protected float ACTIVE_DIST = 0.9f;							// Distance (in meters) between the player and the switch where the switch is active
+	protected float ACTIVE_DIST = 0.04f;							// Distance (in meters) between the player and the switch where the switch is active
 	protected float CURSOR_SIZE = 0.03f;						// Ray cast hitbox size
 	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time (in seconds) for the switch to travel ("speed")
 	protected int AXIS = 0;										// Axis values: 0 = x, 1 = y, 2 = z
@@ -34,7 +34,8 @@ public class LightSwitch extends Script{
 	private bool flipped, firstSwitchViewed = false;
 	private float curCooldownTime = 0.f;
 	
-	private RayCast[] rays;
+	// private RayCast[] rays;
+	protected InteractionObject[] interactionObjects;
 	protected OperatorSwitch[] switches;
 	protected LightGroup[] switchLights;
 	
@@ -50,7 +51,8 @@ public class LightSwitch extends Script{
 		while (sco.getElementForName(SWITCH_ELEMENT_PREFIX + numSwitches) != null) numSwitches++; // Find number of switches
 		--numSwitches;
 		cursors = new SceneObjectElement[numSwitches]; // Initialize arrays
-		rays = new RayCast[numSwitches];
+		// rays = new RayCast[numSwitches];
+		interactionObjects = new InteractionObject[numSwitches];
 		switches = new OperatorSwitch[numSwitches];
 		switchLights = new LightGroup[numSwitches];
 		
@@ -75,7 +77,11 @@ public class LightSwitch extends Script{
 				return false;
 			}
 			
-			rays[i] = new RayCast(switchElem); // Setup rays
+			// rays[i] = new RayCast(switchElem); // Setup rays
+			interactionObjects[i] = InteractionObject.createSimpleButton(); // Setup interaction objects
+			interactionObjects[i].addActionListener(this);
+			interactionObjects[i].setPosition(switchElem.getAbsoluteTranslation());
+			interactionObjects[i].setRadius(ACTIVE_DIST);
 			
 			// Setup light groups
 			String lightsName = sco.getStringParameter("lights_name" + (i+1));
@@ -121,38 +127,38 @@ public class LightSwitch extends Script{
 		return true;
 	}
 
+	public void onInteractionAction(InteractionObject interactionObject){
+		if (flipped) return;
+
+		int i = 0;
+		while (interactionObject != interactionObjects[i]) i++;
+
+		if (switches[i].getSwitchState() != 0){
+			switches[i].setSwitchState(0);
+			soundOff.setPosition(switches[i].getSwitchAbsTrans());
+			soundOff.play();
+		}
+		else{
+			switches[i].setSwitchState(1);
+			soundOn.setPosition(switches[i].getSwitchAbsTrans());
+			soundOn.play();
+		}
+		if (switchLights[i] != null) switchLights[i].toggleLights();
+		flipped = true;
+
+		for (int j = 0; j < interactionObjects.length; j++){
+			interactionObjects[j].setEnabled(false);
+		}
+	}
+
 	public void onNextFrame(float tick){
 		if (flipped){
 			curCooldownTime = curCooldownTime + tick;
 			if (curCooldownTime > COOLDOWN){
 				curCooldownTime = 0.f;
 				flipped = false;
-			}
-		}
-		
-		if(sim.isViewerInsideSphere(sco.getTranslation(), ACTIVE_DIST)){
-			firstSwitchViewed = false; // Prevents multiple switches from being viewed & clicked at the same time
-			for (int i = rays.length-1; i >= 0; --i){
-				if (!flipped && !firstSwitchViewed && rays[i].isViewerLookingAt(CURSOR_SIZE)){
-					cursors[i].setVisible(true);
-					if (Button.isPressed(Button.ACTION)){
-						if (switches[i].getSwitchState() != 0){
-							switches[i].setSwitchState(0);
-							soundOff.setPosition(switches[i].getSwitchAbsTrans());
-							soundOff.play();
-						}
-						else{
-							switches[i].setSwitchState(1);
-							soundOn.setPosition(switches[i].getSwitchAbsTrans());
-							soundOn.play();
-						}
-						if (switchLights[i] != null) switchLights[i].toggleLights();
-						flipped = true;
-					}
-					firstSwitchViewed = true;
-				}
-				else{
-					cursors[i].setVisible(false);
+				for (int j = 0; j < interactionObjects.length; j++){
+					interactionObjects[j].setEnabled(true);
 				}
 			}
 		}
