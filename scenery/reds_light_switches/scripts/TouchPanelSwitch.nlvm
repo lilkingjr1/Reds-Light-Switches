@@ -12,6 +12,7 @@ public class TouchPanelSwitch extends LightSwitch{
     public final bool onLateInit(){		
         super.SCRIPT_NAME = "TouchPanelSwitch";		// Script name for debugging
 		super.CURSOR_SIZE = 0.175f;					// Ray cast hitbox size
+		super.ACTIVE_DIST = 0.12f;				// Distance (in meters) between the player and the switch where the switch is active
 		
         if ( super.onLateInit() ){
 			super.switches[0] = new OperatorTouchPanel( // Setup touch panel operator
