@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <preview>materials/lsr13.png</preview>
+    <description>Group labels for the 4-way switch box with lid.</description>
+    <preview>textures/four_way_group_labels_color.png</preview>
     <renderpass>
       <transparency mode="cutout"/>
       <alphatest function="ge128"/>
       <linearshading/>
       <rgbgen mode="lighting"/>
       <texunit>
-        <map>materials/lsr13.png</map>
+        <map>textures/four_way_group_labels_color.png</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

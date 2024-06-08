@@ -10,15 +10,15 @@ import util.OperatorPlacard;
 public class BinarySwitch extends LightSwitch{
 	private static final String PLACARD_ELEMENT_NAME = "placard";	// Name of the placard element in the SCO/model
 	
-    public final bool onLateInit(){		
-        super.SCRIPT_NAME = "BinarySwitch";		// Script name for debugging
+	public final bool onLateInit(){		
+		super.SCRIPT_NAME = "BinarySwitch";		// Script name for debugging
 		super.ON_ANGLE = 45.f;					// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = -45.f;				// Angle from the model's original switch position to appear off
 		super.CURSOR_SIZE = 0.1f;				// Ray cast hitbox size
 		super.SWITCH_TRAVEL_TIME = 0.4f;		// Time (in seconds) for the switch to travel ("speed")
 		super.AXIS = 2;							// Axis values: 0 = x, 1 = y, 2 = z
 		
-        if ( super.onLateInit() ){
+		if ( super.onLateInit() ){
 			OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
 				super.sco,
 				super.sco.getElementForName(PLACARD_ELEMENT_NAME)
@@ -27,5 +27,5 @@ public class BinarySwitch extends LightSwitch{
 			return true;
 		}
 		else return false;
-    }
+	}
 }

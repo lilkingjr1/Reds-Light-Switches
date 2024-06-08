@@ -7,7 +7,7 @@
       <clip mesh="key" distance="15"/>
     </model>
     <description>A scripted, animated key switch for controlling lights, with customizable placard.</description>
-    <preview>textures/previews/key_switch.png</preview>
+    <preview>materials/previews/key_switch.png</preview>
     <param basescalex="2"/>
     <param basescaley="2"/>
     <param basescalez="2"/>
@@ -21,6 +21,11 @@
       <index>1</index>
       <defaultcolor r="0" g="0" b="0"/>
     </usercolor>
+    <usertexture>
+      <label>Placard:</label>
+      <description>Placard text image to use. Can be custom, but must be black text with white background.</description>
+      <defaultpath>[ Placards ]/Default.jpg</defaultpath>
+    </usertexture>
     <script>
       <classpath>scripts</classpath>
       <class>KeySwitch</class>
@@ -77,41 +82,17 @@
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
     <scriptparameter>
-      <type>string</type>
-      <defaultvalue>Only select ONE of the options below.</defaultvalue>
-      <id>placard_instructions</id>
-      <description>Selections for placard text. Changing this text does nothing.</description>
-      <label>========== Placard Options ==========</label>
-    </scriptparameter>
-    <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
-      <id>placard0</id>
-      <label>No Placard (Invisible)</label>
+      <id>hide_placard</id>
+      <description>Hides the placard during Play Mode.</description>
+      <label>Hide Placard</label>
     </scriptparameter>
-    <scriptparameter>
-      <type>bool</type>
-      <defaultvalue>true</defaultvalue>
-      <id>placard1</id>
-      <label>Lights (Off / On)</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type>bool</type>
-      <defaultvalue>false</defaultvalue>
-      <id>placard2</id>
-      <label>Running Lights (Off / On)</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type>bool</type>
-      <defaultvalue>false</defaultvalue>
-      <id>placard3</id>
-      <label>Show Lights (Off / On)</label>
-    </scriptparameter>
-    <materialpath name="black">textures/plastic_black.nl2mat</materialpath>
-    <materialpath name="cursor">textures/cursor.nl2mat</materialpath>
+    <materialpath name="black">materials/plastic_black.nl2mat</materialpath>
+    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
     <materialpath name="key">intern:data/materials/Chrome.nl2mat</materialpath>
-    <materialpath name="key_arrow">textures/key_hole.nl2mat</materialpath>
-    <materialpath name="metal">textures/metal011.nl2mat</materialpath>
-    <materialpath name="placard">textures/placard_switch.nl2mat</materialpath>
+    <materialpath name="key_arrow">materials/key_hole.nl2mat</materialpath>
+    <materialpath name="metal">materials/metal011.nl2mat</materialpath>
+    <materialpath name="placard">[ Placards ]/placard.nl2mat</materialpath>
   </sceneobject>
 </root>

@@ -2,7 +2,7 @@
 <root>
   <material>
     <description>Screen for the Touch Panel Switch, with LCD overlay texture and illumination.</description>
-    <preview>materials/touch_on.jpg</preview>
+    <preview>textures/touch_on.jpg</preview>
     <renderpass>
       <shadercore>tmp0 = Mul(tex0, tex1);
 Emission = tmp0;
@@ -12,13 +12,13 @@ Result = tmp0;</shadercore>
       <rgbgen mode="lighting"/>
       <texunit>
         <animmap frequency="0">
-          <map>materials/touch_off.jpg</map>
-          <map>materials/touch_on.jpg</map>
+          <map>textures/touch_off.jpg</map>
+          <map>textures/touch_on.jpg</map>
         </animmap>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/lcd_pixel.jpg</map>
+        <map>textures/lcd_pixel.jpg</map>
         <bump mode="normalgloss"/>
         <tcgen mode="base"/>
         <tcmod mode="scale" scales="250" scalet="100"/>

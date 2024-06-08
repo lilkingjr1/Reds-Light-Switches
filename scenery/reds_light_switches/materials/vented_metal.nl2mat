@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <preview>materials/vented_metal_color.jpg</preview>
+    <preview>textures/vented_metal_color.jpg</preview>
     <renderpass>
       <shadercore>Result = tex0;
 Roughness = tex2;
@@ -11,20 +11,20 @@ Specular = tex3;</shadercore>
       <reflection bump="true" affectedbyspecular="true" fresnelconst="0" fresnelvar="0.4"/>
       <rgbgen mode="bumplighting"/>
       <texunit>
-        <map>materials/vented_metal_color.jpg</map>
+        <map>textures/vented_metal_color.jpg</map>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/vented_metal_normal.jpg</map>
+        <map>textures/vented_metal_normal.jpg</map>
         <bump mode="normalgloss"/>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/vented_metal_roughness.jpg</map>
+        <map>textures/vented_metal_roughness.jpg</map>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/vented_metal_metallic.jpg</map>
+        <map>textures/vented_metal_metallic.jpg</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

@@ -2,7 +2,7 @@
 <root>
   <material>
     <description>Matte plastic with handle bump map that is recolorable using the User 0 custom defined color.</description>
-    <preview>materials/breaker_handle_bump.jpg</preview>
+    <preview>textures/breaker_handle_bump.jpg</preview>
     <renderpass>
       <shadercore>Result = Mul(Entity0, 0.7);
 Specular = 0;
@@ -11,7 +11,7 @@ Roughness = 1;</shadercore>
       <linearshading/>
       <rgbgen mode="bumplighting"/>
       <texunit>
-        <map>materials/breaker_handle_bump.jpg</map>
+        <map>textures/breaker_handle_bump.jpg</map>
         <bump mode="heightgloss" heightscale="20"/>
         <tcgen mode="base"/>
       </texunit>

@@ -7,7 +7,7 @@
       <clip mesh="shield" distance="15"/>
     </model>
     <description>A scripted, animated shunt trip saftey switch for controlling lights.</description>
-    <preview>textures/previews/breaker_switch.png</preview>
+    <preview>materials/previews/breaker_switch.png</preview>
     <usercolor>
       <label>Handle Color</label>
       <index>0</index>
@@ -81,13 +81,13 @@
       <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
-    <materialpath name="breaker_handle_bump">textures/breaker_handle_user0.nl2mat</materialpath>
-    <materialpath name="breaker_label">textures/breaker_label.nl2mat</materialpath>
-    <materialpath name="breaker_on_off">textures/breaker_on_off.nl2mat</materialpath>
-    <materialpath name="cursor">textures/cursor.nl2mat</materialpath>
-    <materialpath name="key_norm">textures/breaker_key_hole.nl2mat</materialpath>
-    <materialpath name="red">textures/plastic_user0.nl2mat</materialpath>
-    <materialpath name="screw">textures/screw.nl2mat</materialpath>
+    <materialpath name="breaker_handle_bump">materials/breaker_handle_user0.nl2mat</materialpath>
+    <materialpath name="breaker_label">materials/breaker_label.nl2mat</materialpath>
+    <materialpath name="breaker_on_off">materials/breaker_on_off.nl2mat</materialpath>
+    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
+    <materialpath name="key_norm">materials/breaker_key_hole.nl2mat</materialpath>
+    <materialpath name="red">materials/plastic_user0.nl2mat</materialpath>
+    <materialpath name="screw">materials/screw.nl2mat</materialpath>
     <materialpath name="steel">intern:data/materials/Chrome.nl2mat</materialpath>
   </sceneobject>
 </root>

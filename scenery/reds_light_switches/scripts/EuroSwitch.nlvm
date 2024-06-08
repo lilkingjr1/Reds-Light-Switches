@@ -6,12 +6,12 @@
 */
 
 public class EuroSwitch extends LightSwitch{
-    public final bool onLateInit(){		
-        super.SCRIPT_NAME = "EuroSwitch";	// Script name for debugging
+	public final bool onLateInit(){		
+		super.SCRIPT_NAME = "EuroSwitch";	// Script name for debugging
 		super.ON_ANGLE = -10.f;				// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = 0.f;				// Angle from the model's original switch position to appear off
 		super.CURSOR_SIZE = 0.1f;			// Ray cast hitbox size
 		
-        return super.onLateInit();
-    }
+		return super.onLateInit();
+	}
 }

@@ -9,12 +9,12 @@ import util.OperatorTouchPanel;
 
 public class TouchPanelSwitch extends LightSwitch{
 	
-    public final bool onLateInit(){		
-        super.SCRIPT_NAME = "TouchPanelSwitch";		// Script name for debugging
+	public final bool onLateInit(){		
+		super.SCRIPT_NAME = "TouchPanelSwitch";		// Script name for debugging
 		super.CURSOR_SIZE = 0.175f;					// Ray cast hitbox size
-		super.ACTIVE_DIST = 0.12f;				// Distance (in meters) between the player and the switch where the switch is active
+		super.ACTIVE_DIST = 0.12f;					// Distance (in meters) between the player and the switch where the switch is active
 		
-        if ( super.onLateInit() ){
+		if ( super.onLateInit() ){
 			super.switches[0] = new OperatorTouchPanel( // Setup touch panel operator
 				super.sco.getElementForName(SWITCH_ELEMENT_PREFIX + "1"),
 				2,
@@ -28,6 +28,6 @@ public class TouchPanelSwitch extends LightSwitch{
 			return (switches[0] != null);
 		}
 		else return false;
-    }
+	}
 	
 }

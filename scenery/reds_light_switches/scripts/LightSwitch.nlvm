@@ -16,16 +16,16 @@ import util.OperatorSwitch;
 import util.LightGroup;
 
 public class LightSwitch extends Script implements InteractionActionListener{	
-	protected String SCRIPT_NAME = "LightSwitch";				// Script name for debugging
-	protected String SWITCH_ELEMENT_PREFIX = "switch";			// Prefix of the switch element names in the SCO/model
-	protected String CURSOR_ELEMENT_PREFIX = "cursor";			// Prefix of the cursor element names in the SCO/model
-	protected float ON_ANGLE = 0.f;								// Angle from the model's original switch position to appear on
-	protected float OFF_ANGLE = 75.f;							// Angle from the model's original switch position to appear off
-	protected float COOLDOWN = 0.25f;							// Cooldown (in seconds) before the switch can be switched again
-	protected float ACTIVE_DIST = 0.04f;							// Distance (in meters) between the player and the switch where the switch is active
-	protected float CURSOR_SIZE = 0.03f;						// Ray cast hitbox size
-	protected float SWITCH_TRAVEL_TIME = 0.025f;				// Time (in seconds) for the switch to travel ("speed")
-	protected int AXIS = 0;										// Axis values: 0 = x, 1 = y, 2 = z
+	protected String SCRIPT_NAME = "LightSwitch";			// Script name for debugging
+	protected String SWITCH_ELEMENT_PREFIX = "switch";		// Prefix of the switch element names in the SCO/model
+	protected String CURSOR_ELEMENT_PREFIX = "cursor";		// Prefix of the cursor element names in the SCO/model
+	protected float ON_ANGLE = 0.f;							// Angle from the model's original switch position to appear on
+	protected float OFF_ANGLE = 75.f;						// Angle from the model's original switch position to appear off
+	protected float COOLDOWN = 0.25f;						// Cooldown (in seconds) before the switch can be switched again
+	protected float ACTIVE_DIST = 0.04f;					// Distance (in meters) between the player and the switch where the switch is active
+	protected float CURSOR_SIZE = 0.03f;					// Ray cast hitbox size
+	protected float SWITCH_TRAVEL_TIME = 0.025f;			// Time (in seconds) for the switch to travel ("speed")
+	protected int AXIS = 0;									// Axis values: 0 = x, 1 = y, 2 = z
 	
 	protected SceneObject sco;
 	private SceneObjectElement[] cursors;
@@ -42,9 +42,9 @@ public class LightSwitch extends Script implements InteractionActionListener{
 	public bool onLateInit(){ // On initialization of Play simulation
 		sco = sim.getSceneObjectForEntityId(getParentEntityId()); // Get and assign local sco
 		if (sco == null){
-            System.err.println(SCRIPT_NAME + ": This script only works with NL2 scene objects");
+			System.err.println(SCRIPT_NAME + ": This script only works with NL2 scene objects");
 			return false;
-        }
+		}
 		
 		int numSwitches = 1;
 		if (sco.getElementForName(SWITCH_ELEMENT_PREFIX + numSwitches) == null) return false; // Check for at least one switch
