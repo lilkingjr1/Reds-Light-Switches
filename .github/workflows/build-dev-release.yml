@@ -12,18 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete existing tag and release
-        uses: dev-drprasad/delete-tag-and-release@master
+        uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
-          delete_release: true # default: false
           tag_name: v.${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_release: true
         continue-on-error: true
       - name: Create release
-        uses: actions/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@master
         with:
           tag_name: v.${{ github.ref_name }} # Tag name CANNOT equal branch name
-          release_name: Development Build (Unpackaged)
+          name: Development Build (Unpackaged)
+          target_commitish: "dev"
           prerelease: true
