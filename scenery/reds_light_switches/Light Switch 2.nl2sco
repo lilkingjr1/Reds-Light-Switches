@@ -66,7 +66,6 @@
       <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
-    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
     <materialpath name="material">materials/plastic_user0.nl2mat</materialpath>
   </sceneobject>
 </root>

@@ -61,7 +61,6 @@
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
     <materialpath name="black_plastic">materials/plastic_black.nl2mat</materialpath>
-    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
     <materialpath name="key_norm">materials/breaker_key_hole.nl2mat</materialpath>
     <materialpath name="lsr13">materials/lsr13.nl2mat</materialpath>
     <materialpath name="metal">materials/soft_metal.nl2mat</materialpath>

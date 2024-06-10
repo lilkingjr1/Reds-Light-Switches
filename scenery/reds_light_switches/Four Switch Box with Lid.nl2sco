@@ -93,7 +93,6 @@
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
     <materialpath name="black">materials/plastic_black.nl2mat</materialpath>
-    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
     <materialpath name="four_way_group_labels">materials/four_way_group_labels.nl2mat</materialpath>
     <materialpath name="four_way_labels">materials/four_way_labels.nl2mat</materialpath>
     <materialpath name="four_way_lid_label">materials/four_way_lid_label.nl2mat</materialpath>

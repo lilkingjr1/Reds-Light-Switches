@@ -64,7 +64,6 @@
     </scriptparameter>
     <materialpath name="enclosure">materials/plastic_user0.nl2mat</materialpath>
     <materialpath name="glass">materials/glass_basic_transparent.nl2mat</materialpath>
-    <materialpath name="hand_cursor">materials/cursor_hand.nl2mat</materialpath>
     <materialpath name="screen">materials/touchpanel_screen.nl2mat</materialpath>
   </sceneobject>
 </root>

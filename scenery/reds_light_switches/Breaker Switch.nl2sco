@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <sceneobject>
-    <model path="models/breaker_switch.dae">
+    <model path="models/breaker_switch_lod0.dae">
+      <lod path="models/breaker_switch_lod1.dae" distance="7"/>
       <clip distance="90"/>
       <clip mesh="switch1" distance="25"/>
       <clip mesh="shield" distance="15"/>
@@ -66,7 +67,6 @@
     <materialpath name="breaker_handle_bump">materials/breaker_handle_user0.nl2mat</materialpath>
     <materialpath name="breaker_label">materials/breaker_label.nl2mat</materialpath>
     <materialpath name="breaker_on_off">materials/breaker_on_off.nl2mat</materialpath>
-    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
     <materialpath name="key_norm">materials/breaker_key_hole.nl2mat</materialpath>
     <materialpath name="red">materials/plastic_user0.nl2mat</materialpath>
     <materialpath name="screw">materials/screw.nl2mat</materialpath>
