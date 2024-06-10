@@ -1,6 +1,7 @@
 /**
  	Covered Switch NL2 LightSwitch
 	Author: David Wolfe (Red-Thirten)
+	Contributors: parker02311
 	Date: 06/08/2024
 	Extends LightSwitch to handle the lid cover and switch properties of the Covered Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.

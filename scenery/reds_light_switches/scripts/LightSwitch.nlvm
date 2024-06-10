@@ -1,6 +1,7 @@
 /**
  	Light Switch NL2 Script
 	Author: David Wolfe (Red-Thirten)
+	Contributors: parker02311
 	Date: 06/08/2024
 	Detects user input to switch, animates switch SCO, plays sounds, and controls the lights of specified SCOs in the simulation.
 	Licensed under GNU GPLv3 - See LICENSE for more details.

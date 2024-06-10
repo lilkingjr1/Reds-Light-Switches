@@ -1,6 +1,7 @@
 /**
  	Breaker Switch NL2 LightSwitch
 	Author: David Wolfe (Red-Thirten)
+	Contributors: parker02311
 	Date: 06/08/2024
 	Extends LightSwitch to handle switch properties of the Breaker Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
