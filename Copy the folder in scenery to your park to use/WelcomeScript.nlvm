@@ -9,7 +9,7 @@ import com.nolimitscoaster.Script;
 
 public class WelcomeScript extends Script{
 	public bool onInit(){ // On initialization of Play simulation
-		if (true){ // Enable or disable message
+		if (false){ // Enable or disable message
 			System.err.println("HEY! No error! Just wanted to thank you very much for downloading my Light Switches pack!");
 			System.err.println("If you have any questions, please check out the README.html in \\scenery\\reds_light_switches.");
 			System.err.println("I recommend checking out the double-click settings of all the different switches in the editor.");

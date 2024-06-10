@@ -36,6 +36,8 @@
       <class>BinarySwitch</class>
       <sharedvm>true</sharedvm>
       <resource id="LICENSE">LICENSE</resource>
+      <resource id="sound_off">sounds/switch_binary_off.ogg</resource>
+      <resource id="sound_on">sounds/switch_binary_on.ogg</resource>
     </script>
     <scriptparameter>
       <type>string</type>
@@ -43,6 +45,13 @@
       <id>lights_name1</id>
       <description>The shared name of light SCOs for this switch to control. All lights should have the same name (ie. &quot;station_switch&quot;, &quot;maitnence_switch&quot;, etc), Leave empty for passive mode.</description>
       <label>Name of Lights to Control:</label>
+    </scriptparameter>
+    <scriptparameter>
+      <type>string</type>
+      <defaultvalue></defaultvalue>
+      <id>lights_name_inv1</id>
+      <description>Similar to the list above, but this group of lights will be OPPOSITE of the switch state. Good for &quot;emergency lights&quot; that turn on when the power goes out. Leave empty for passive mode.</description>
+      <label>Name of Lights to Control (Inverse):</label>
     </scriptparameter>
     <scriptparameter>
       <type>bool</type>
@@ -66,20 +75,6 @@
       <label>Override Interval (Seconds):</label>
     </scriptparameter>
     <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_binary_on.ogg</defaultvalue>
-      <id>switch_on_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned on.</description>
-      <label>Switch On Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_binary_off.ogg</defaultvalue>
-      <id>switch_off_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned off.</description>
-      <label>Switch Off Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
       <id>disable_ent_color</id>
@@ -95,7 +90,6 @@
     </scriptparameter>
     <materialpath name="black">materials/plastic_black.nl2mat</materialpath>
     <materialpath name="black_plastic">materials/plastic_black_textured.nl2mat</materialpath>
-    <materialpath name="cursor">materials/cursor.nl2mat</materialpath>
     <materialpath name="ivory">materials/plastic_user2.nl2mat</materialpath>
     <materialpath name="metal">materials/metal011.nl2mat</materialpath>
     <materialpath name="metal_0">materials/metal011.nl2mat</materialpath>

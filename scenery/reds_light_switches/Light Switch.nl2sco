@@ -14,6 +14,8 @@
       <class>LightSwitch</class>
       <sharedvm>true</sharedvm>
       <resource id="LICENSE">LICENSE</resource>
+      <resource id="sound_off">sounds/switch_off.ogg</resource>
+      <resource id="sound_on">sounds/switch_on.ogg</resource>
     </script>
     <scriptparameter>
       <type>string</type>
@@ -42,20 +44,6 @@
       <id>override_interval</id>
       <description>How often to set the current state of the switch to all lights. &quot;0&quot; disables. Attempts to keep lights with their own on/off scripts &quot;synced up&quot; to the switch. Values close to 0 may cause lag.</description>
       <label>Override Interval (Seconds):</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_on.ogg</defaultvalue>
-      <id>switch_on_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned on.</description>
-      <label>Switch On Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_off.ogg</defaultvalue>
-      <id>switch_off_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned off.</description>
-      <label>Switch Off Sound Effect</label>
     </scriptparameter>
     <scriptparameter>
       <type>bool</type>

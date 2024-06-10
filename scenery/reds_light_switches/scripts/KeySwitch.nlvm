@@ -1,14 +1,15 @@
-/**Key Switch NL2 LightSwitch**
+/**
+ 	Key Switch NL2 LightSwitch
 	Author: David Wolfe (Red-Thirten)
-	Date: 12/21/2022
+	Date: 06/08/2024
 	Extends LightSwitch to handle placard and switch properties of the Key Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
 
-import com.nolimitscoaster.SceneObjectElement;
+import com.nolimitscoaster.ResourcePath;
 
-import util.OperatorSwitch;
-import util.OperatorPlacard;
+import obj.OperatorSwitch;
+import util.SceneObjectTools;
 
 public class KeySwitch extends LightSwitch{
 	private static final String PLACARD_ELEMENT_NAME = "placard";	// Name of the placard element in the SCO/model
@@ -20,37 +21,42 @@ public class KeySwitch extends LightSwitch{
 		super.ON_ANGLE = 45.f;				// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = -45.f;			// Angle from the model's original switch position to appear off
 		super.COOLDOWN = 2.f;				// Cooldown (in seconds) before the switch can be switched again
-		super.CURSOR_SIZE = 0.1f;			// Ray cast hitbox size
 		super.SWITCH_TRAVEL_TIME = 0.6f;	// Time (in seconds) for the switch to travel ("speed")
 		super.AXIS = 2;						// Axis values: 0 = x, 1 = y, 2 = z
 		
 		if ( super.onLateInit() ){
-			OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
-				super.sco,
-				super.sco.getElementForName(PLACARD_ELEMENT_NAME)
-			);
-			
-			SceneObjectElement keyElement = super.sco.getElementForName(KEY_ELEMENT_NAME); // Get key element
-			if (keyElement == null){ // Check for key element
-				System.err.println(SCRIPT_NAME + ": Wrong 3d model loaded (Cannot find \"" + KEY_ELEMENT_NAME + "\" element)");
-				return false;
-			}
-			
-			super.switches[0] = new OperatorSwitch( // Setup key switch
-				super.sco.getElementForName(SWITCH_ELEMENT_PREFIX + "1"),
+			// Get sound Resource Paths
+			ResourcePath[] soundPaths = new ResourcePath[]{
+				this.getResourcePathForId("sound_on"),
+				this.getResourcePathForId("sound_off"),
+				this.getResourcePathForId("key_in"),
+				this.getResourcePathForId("key_out")
+			};
+			// Setup key switch
+			switches[0] = new OperatorSwitch(
+				SceneObjectTools.getElementForName(sco, SWITCH_ELEMENT_PREFIX + "1", SCRIPT_NAME),
+				soundPaths,
 				2,
-				super.sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
 				OFF_ANGLE,
 				ON_ANGLE,
 				AXIS,
 				SWITCH_TRAVEL_TIME,
-				keyElement,
+				SceneObjectTools.getElementForName(sco, KEY_ELEMENT_NAME, SCRIPT_NAME),
 				KEY_TRAVEL_DIST,
-				false
+				-1
+			);
+			// Set initial state
+			switches[0].setSwitchState(
+				sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0
 			);
 
 			// Adjust delay time to account for key animation
-			super.switchLights[0].setDelayTime(SWITCH_TRAVEL_TIME * 1.5f);
+			switchLights[0].setDelayTime(SWITCH_TRAVEL_TIME * 1.5f);
+
+			// Hide placard if configured
+			if ( sco.getBooleanParameter("hide_placard").boolValue() ){
+				SceneObjectTools.getElementForName(sco, PLACARD_ELEMENT_NAME, SCRIPT_NAME).setVisible(false);
+			}
 			
 			return (switches[0] != null);
 		}

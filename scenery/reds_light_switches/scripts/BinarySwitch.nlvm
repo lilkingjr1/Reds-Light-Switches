@@ -1,11 +1,12 @@
-/**Binary Switch NL2 LightSwitch**
+/**
+ 	Binary Switch NL2 LightSwitch
 	Author: David Wolfe (Red-Thirten)
-	Date: 10/08/2022
+	Date: 06/08/2024
 	Extends LightSwitch to handle placard and switch properties of the Binary Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
 
-import util.OperatorPlacard;
+import util.SceneObjectTools;
 
 public class BinarySwitch extends LightSwitch{
 	private static final String PLACARD_ELEMENT_NAME = "placard";	// Name of the placard element in the SCO/model
@@ -14,15 +15,14 @@ public class BinarySwitch extends LightSwitch{
 		super.SCRIPT_NAME = "BinarySwitch";		// Script name for debugging
 		super.ON_ANGLE = 45.f;					// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = -45.f;				// Angle from the model's original switch position to appear off
-		super.CURSOR_SIZE = 0.1f;				// Ray cast hitbox size
 		super.SWITCH_TRAVEL_TIME = 0.4f;		// Time (in seconds) for the switch to travel ("speed")
 		super.AXIS = 2;							// Axis values: 0 = x, 1 = y, 2 = z
 		
 		if ( super.onLateInit() ){
-			OperatorPlacard.setPlacardTextureFromScoParams( // Set placard texture using external class
-				super.sco,
-				super.sco.getElementForName(PLACARD_ELEMENT_NAME)
-			);
+			// Hide placard if configured
+			if ( sco.getBooleanParameter("hide_placard").boolValue() ){
+				SceneObjectTools.getElementForName(sco, PLACARD_ELEMENT_NAME, SCRIPT_NAME).setVisible(false);
+			}
 			
 			return true;
 		}
