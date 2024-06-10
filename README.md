@@ -1,4 +1,4 @@
-![Red's Light Switches](/scenery/reds_light_switches/textures/previews/overview.jpg?raw=true)
+![Red's Light Switches](/scenery/reds_light_switches/materials/previews/overview.jpg?raw=true)
 
 ___
 
