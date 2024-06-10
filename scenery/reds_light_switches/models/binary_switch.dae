@@ -4,8 +4,8 @@
         <contributor>
             <authoring_tool>SketchUp 17.2.2555</authoring_tool>
         </contributor>
-        <created>2022-05-12T20:13:55Z</created>
-        <modified>2022-05-12T20:13:55Z</modified>
+        <created>2024-06-10T18:03:58Z</created>
+        <modified>2024-06-10T18:03:58Z</modified>
         <unit meter="0.0254" name="inch" />
         <up_axis>Z_UP</up_axis>
     </asset>
@@ -27,7 +27,7 @@
         <visual_scene id="ID2">
             <node name="SketchUp">
                 <node name="skp_camera_Last_Saved_SketchUp_View">
-                    <matrix>0.5579837 0.2264741 -0.7983506 -3.365846 -0.8298519 0.1522788 -0.5368026 -3.590998 -1.249001e-16 0.9620398 0.272909 2.416869 0 0 0 1</matrix>
+                    <matrix>0.8459296 0.1000886 -0.5238181 -1.934344 -0.5332946 0.1587638 -0.8308976 -4.731537 -4.163336e-17 0.9822302 0.1876797 2.082726 0 0 0 1</matrix>
                     <instance_camera url="#ID1" />
                 </node>
                 <node id="ID3" name="instance_0">
@@ -45,10 +45,6 @@
                 <node id="ID101" name="instance_3">
                     <matrix>1 0 0 0.3937008 0 1 0 -0.669685 0 0 1 0.1771654 0 0 0 1</matrix>
                     <instance_node url="#ID102" />
-                </node>
-                <node id="ID116" name="instance_4">
-                    <matrix>1 0 0 0.492126 0 1 0 -0.9255906 0 0 1 0.2755906 0 0 0 1</matrix>
-                    <instance_node url="#ID117" />
                 </node>
             </node>
         </visual_scene>
@@ -152,17 +148,6 @@
                 <bind_material>
                     <technique_common>
                         <instance_material symbol="Material2" target="#ID104">
-                            <bind_vertex_input semantic="UVSET0" input_semantic="TEXCOORD" input_set="0" />
-                        </instance_material>
-                    </technique_common>
-                </bind_material>
-            </instance_geometry>
-        </node>
-        <node id="ID117" name="cursor1">
-            <instance_geometry url="#ID118">
-                <bind_material>
-                    <technique_common>
-                        <instance_material symbol="Material2" target="#ID119">
                             <bind_vertex_input semantic="UVSET0" input_semantic="TEXCOORD" input_set="0" />
                         </instance_material>
                     </technique_common>
@@ -579,38 +564,6 @@
                 </triangles>
             </mesh>
         </geometry>
-        <geometry id="ID118">
-            <mesh>
-                <source id="ID121">
-                    <float_array id="ID124" count="12">0.984252 0 0.984252 0 0 0 0.984252 0 0 0 0 0.984252</float_array>
-                    <technique_common>
-                        <accessor count="4" source="#ID124" stride="3">
-                            <param name="X" type="float" />
-                            <param name="Y" type="float" />
-                            <param name="Z" type="float" />
-                        </accessor>
-                    </technique_common>
-                </source>
-                <source id="ID122">
-                    <float_array id="ID125" count="12">0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
-                    <technique_common>
-                        <accessor count="4" source="#ID125" stride="3">
-                            <param name="X" type="float" />
-                            <param name="Y" type="float" />
-                            <param name="Z" type="float" />
-                        </accessor>
-                    </technique_common>
-                </source>
-                <vertices id="ID123">
-                    <input semantic="POSITION" source="#ID121" />
-                    <input semantic="NORMAL" source="#ID122" />
-                </vertices>
-                <triangles count="2" material="Material2">
-                    <input offset="0" semantic="VERTEX" source="#ID123" />
-                    <p>0 1 2 1 0 3</p>
-                </triangles>
-            </mesh>
-        </geometry>
     </library_geometries>
     <library_materials>
         <material id="ID6" name="black">
@@ -633,9 +586,6 @@
         </material>
         <material id="ID104" name="metal_0">
             <instance_effect url="#ID105" />
-        </material>
-        <material id="ID119" name="cursor">
-            <instance_effect url="#ID120" />
         </material>
     </library_materials>
     <library_effects>
@@ -766,33 +716,22 @@
                 </technique>
             </profile_COMMON>
         </effect>
-        <effect id="ID120">
-            <profile_COMMON>
-                <technique sid="COMMON">
-                    <lambert>
-                        <diffuse>
-                            <color>0 1 0 1</color>
-                        </diffuse>
-                    </lambert>
-                </technique>
-            </profile_COMMON>
-        </effect>
     </library_effects>
     <library_images>
         <image id="ID18">
-            <init_from>switch/placard.png</init_from>
+            <init_from>binary_switch/placard.png</init_from>
         </image>
         <image id="ID33">
-            <init_from>switch/metal.jpg</init_from>
+            <init_from>binary_switch/metal.jpg</init_from>
         </image>
         <image id="ID48">
-            <init_from>switch/black_plastic.jpg</init_from>
+            <init_from>binary_switch/black_plastic.jpg</init_from>
         </image>
         <image id="ID61">
-            <init_from>switch/switch_grip_height.png</init_from>
+            <init_from>binary_switch/switch_grip_height.png</init_from>
         </image>
         <image id="ID106">
-            <init_from>switch/metal_0.jpg</init_from>
+            <init_from>binary_switch/metal_0.jpg</init_from>
         </image>
     </library_images>
     <scene>

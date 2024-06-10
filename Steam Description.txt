@@ -1,5 +1,5 @@
 [h1][u]Red's Light Switches[/u][/h1]
-[quote][b]A pack of various scripted light switches to help you add that extra bit of detail & interactivity to your park! All switches can be clicked on to turn the lights of one or many scenery objects on or off. Some can even turn off (E-Stop) a coaster if you choose![/b][/quote]
+[quote][b]A pack of various scripted light switches to help you add that extra bit of detail & interactivity to your park! All switches can be clicked on to turn the lights of one or many scenery objects on or off.[/b][/quote]
 [i]Like what you see? Appreciate the work that went into making it?
 [img]https://i.imgur.com/ZpAhItL.gif[/img]
 Want to be even more awesome!? Supporting the project by donating helps me make more content like this in the future![/i]
@@ -26,10 +26,8 @@ Comment below if there is a specific switch style you would like to see added to
     [*]Switches can be used purely aesthetically and do not have to be connected to any lights if desired.
     [*]Choose if the switch & lights should be on or off when the simulation starts.
     [*]Choose an optional amount of time for the lights to flicker/warm up when the switch is turned on.
-    [*]Choose a sound effect for the switch to play when it is turned on or off, or use the default sounds included with the pack.
-    [*]For the breaker switches, choose an optional coaster to E-Stop when the switch is turned off.
     [*]Choose an optional override interval that will force the light(s) to match the switch's state, even if the light's own script told it to do otherwise (ex. vanilla lights turn on at night even though the switch is set to off).
-	[*][NEW] Breaker-style switches have an extra "inverse" light group setting that can allow for certain lights to turn on when the switch is off (like "emergency lights").
+	[*][NEW] Some switches have an extra "inverse" light group setting that can allow for certain lights to turn on when the switch is off (like "emergency lights").
 [/list]
 
 A README.html (that you can open in your browser) with details on how to use the pack is also included with the pack.
@@ -62,6 +60,7 @@ A README.html (that you can open in your browser) with details on how to use the
 [hr][/hr]
 [h1]Credits:[/h1]
 [list]
+	[*]parker02311 -- Helped update the pack to support InteractionObjects
     [*][url=https://steamcommunity.com/profiles/76561198278741960/myworkshopfiles/?appid=301320]RobbinBob[/url] -- Provided a texture for the Four Switch Box
 	[*]Coastin' Dave -- Switch ideas, beta testing, and feedback
 	[*]Waldo Lahr -- Beta testing and feedback

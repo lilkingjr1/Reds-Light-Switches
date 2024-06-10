@@ -1,6 +1,8 @@
-/**Covered Switch NL2 LightSwitch**
+/**
+ 	Covered Switch NL2 LightSwitch
 	Author: David Wolfe (Red-Thirten)
-	Date: 10/21/2022
+	Contributors: parker02311
+	Date: 06/08/2024
 	Extends LightSwitch to handle the lid cover and switch properties of the Covered Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
@@ -8,35 +10,36 @@
 import com.nolimitscoaster.SceneObjectElement;
 import com.nolimitscoaster.Tools;
 
+import util.SceneObjectTools;
+
 public class CoveredSwitch extends LightSwitch{
-	private static final String LID_ELEMENT_NAME = "lid";							// Name of the lid element in the SCO/model
-	private static final double LID_CLOSED_ANGLE = Math.toRadians(150.f);			// Angle for lid to appear closed (it starts open in the model)
-	private static final double DELTA_T = 1.5f;										// Time (in seconds) for the lid to rotate ("speed")
-	private static final double DELTA_Ta = DELTA_T/2.f;								// (De)Acceleration window is the first and last half of the animation (whole animation)
+	private static final String LID_ELEMENT_NAME = "lid";					// Name of the lid element in the SCO/model
+	private static final double LID_CLOSED_ANGLE = Math.toRadians(150.f);	// Angle for lid to appear closed (it starts open in the model)
+	private static final double DELTA_T = 1.5f;								// Time (in seconds) for the lid to rotate ("speed")
+	private static final double DELTA_Ta = DELTA_T/2.f;						// (De)Acceleration window is the first and last half of the animation (whole animation)
 	
 	private SceneObjectElement lid;
 	
 	private bool animateLid, lidOpen = false;
 	private double t = 0;
+	private static final float LID_OPEN_DISTANCE = 0.9f; // Distance (in meters) from the switch where the lid opens
 	
-    public final bool onLateInit(){		
-        super.SCRIPT_NAME = "CoveredSwitch";	// Script name for debugging
+	public final bool onLateInit(){		
+		super.SCRIPT_NAME = "CoveredSwitch";	// Script name for debugging
 		super.ON_ANGLE = -120.f;				// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = 0.f;					// Angle from the model's original switch position to appear off
-		super.ACTIVE_DIST = 0.9f;				// Distance (in meters) between the player and the switch where the switch is active
+		super.ACTIVE_DIST = 0.02f;				// Distance (in meters) between the player and the switch where the switch is active
 		
-        if ( super.onLateInit() ){
-			lid = super.sco.getElementForName(LID_ELEMENT_NAME); // Initialize and setup lid
-			if (lid == null){
-				System.err.println(SCRIPT_NAME + ": Wrong 3d model loaded (Cannot find \"" + LID_ELEMENT_NAME + "\" element)");
-				return false;
-			}
+		
+		if ( super.onLateInit() ){
+			// Initialize and setup lid
+			lid = SceneObjectTools.getElementForName(sco, LID_ELEMENT_NAME, SCRIPT_NAME);
 			lid.setRotation((float) LID_CLOSED_ANGLE, 0.f, 0.f);
 			
 			return true;
 		}
 		else return false;
-    }
+	}
 	
 	public void onNextFrame(float tick){
 		super.onNextFrame(tick);
@@ -63,7 +66,7 @@ public class CoveredSwitch extends LightSwitch{
 			}
 			t += tick;
 		}
-		else if (sim.isViewerInsideSphere(super.sco.getTranslation(), super.ACTIVE_DIST)){ // If inside active distance...
+		else if (sim.isViewerInsideSphere(sco.getTranslation(), LID_OPEN_DISTANCE)){ // If inside active distance...
 			if (!lidOpen){ // ...and lid is not open, animate
 				animateLid = true;
 			}

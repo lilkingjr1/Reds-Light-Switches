@@ -1,32 +1,47 @@
-/** Touch Panel Switch NL2 LightSwitch**
+/**
+ 	Touch Panel Switch NL2 LightSwitch
 	Author: David Wolfe (Red-Thirten)
-	Date: 10/08/2022
+	Contributors: parker02311
+	Date: 06/10/2024
 	Extends LightSwitch to handle placard and switch properties of the Touch Panel Switch model.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
 
-import util.OperatorTouchPanel;
+import com.nolimitscoaster.ResourcePath;
+
+import obj.OperatorTouchPanel;
+import util.SceneObjectTools;
 
 public class TouchPanelSwitch extends LightSwitch{
 	
-    public final bool onLateInit(){		
-        super.SCRIPT_NAME = "TouchPanelSwitch";		// Script name for debugging
-		super.CURSOR_SIZE = 0.175f;					// Ray cast hitbox size
+	public final bool onLateInit(){		
+		super.SCRIPT_NAME = "TouchPanelSwitch";		// Script name for debugging
+		super.ACTIVE_DIST = 0.12f;					// Distance (in meters) between the player and the switch where the switch is active
 		
-        if ( super.onLateInit() ){
-			super.switches[0] = new OperatorTouchPanel( // Setup touch panel operator
-				super.sco.getElementForName(SWITCH_ELEMENT_PREFIX + "1"),
+		if ( super.onLateInit() ){
+			// Get sound Resource Paths
+			ResourcePath[] soundPaths = new ResourcePath[]{
+				this.getResourcePathForId("sound_on"),
+				this.getResourcePathForId("sound_off")
+			};
+			// Setup touch panel operator
+			switches[0] = new OperatorTouchPanel(
+				SceneObjectTools.getElementForName(sco, SWITCH_ELEMENT_PREFIX + "1", SCRIPT_NAME),
+				soundPaths,
 				2,
-				super.sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0,
 				0.f,
 				0.f,
 				0,
 				0.f
 			);
+			// Set initial state
+			switches[0].setSwitchState(
+				sco.getBooleanParameter("initial_state" + 1).boolValue() ? 1 : 0
+			);
 			
 			return (switches[0] != null);
 		}
 		else return false;
-    }
+	}
 	
 }

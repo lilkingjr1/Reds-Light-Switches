@@ -1,0 +1,206 @@
+/**
+	Operator Switch Object NL2 Script
+	Author: David Wolfe (Red-Thirten)
+	Date: 06/10/2024
+	A Java object representing a switch, with optional key component, that can animate to any given state position.
+	Licensed under GNU GPLv3 - See LICENSE for more details.
+
+	Constructors:
+		OperatorSwitch(SceneObjectElement switchElement, ResourcePath[] soundPaths, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime)
+		OperatorSwitch(SceneObjectElement switchElement, ResourcePath[] soundPaths, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime,
+			SceneObjectElement keyElement, float keyTravelDistance, int keyDefaultOutPos)
+				Note: Set keyDefaultOutPos to negative number to have key pulled out for all positions.
+
+	Methods:
+		Vector3f getAbsoluteTranslation() - Returns the absolute translation of the switch element.
+		int getCurrentState() - Returns the current state/position the switch is set to (not necessarily current position).
+		bool isStatic() - Returns true if the start and end angles are equal.
+		void toggleSwitch() - If the switch only has 2 states, this toggles between them.
+		void setSwitchState(int newState) - Primes the switch to animate to a new state position (newState values start from 0; not 1).
+		void setKeyVisible() - Makes the key element visible.
+		void onNextFrame(float tick) - Should be called every frame to animate switch.
+*/
+
+package obj;
+
+import com.nolimitscoaster.SceneObjectElement;
+import com.nolimitscoaster.StaticSound;
+import com.nolimitscoaster.ResourcePath;
+import com.nolimitscoaster.Tools;
+import nlvm.math3d.Vector3f;
+
+public class OperatorSwitch{
+	protected SceneObjectElement switchElement;
+	private SceneObjectElement keyElement;
+	private StaticSound soundOn, soundOff, soundKeyIn, soundKeyOut;
+	
+	private bool animate, turningRight, hasKey, keyIn = false;
+	private int keyOutState;
+	protected int currentState = 0;
+	protected int TOTAL_STATES; // Semi-static (set only once during init)
+	private int AXIS; // Semi-static (set only once during init)
+	private float t, theta, thetaCurrent, thetaTarget, delta, deltaCurrent;
+	private float DELTA_T, DELTA_Ta, SLOPE, KEY_DIST; // Semi-static (set only once during init)
+	private float START_ANGLE, END_ANGLE; // Semi-static (set only once during init)
+
+	// Default object constructor
+	public OperatorSwitch(SceneObjectElement switchElement, ResourcePath[] soundPaths, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime){
+		this.switchElement = switchElement; // Assign element
+		TOTAL_STATES = totalStates; // Assign static number of states
+		START_ANGLE = (float) Math.toRadians(startAngleDeg); // Assign static start and end angles
+		END_ANGLE = (float) Math.toRadians(endAngleDeg);
+		AXIS = rotationAxis;
+		SLOPE = (END_ANGLE - START_ANGLE) / (TOTAL_STATES - 1); // "Slope" that represents the solution space of possible angles the switch can be at for any given state
+		DELTA_T = (travelTime > 0) ? travelTime : 0.0001f;
+		DELTA_Ta = DELTA_T/2.f; // (De)Acceleration window is the first and last half of the animation (whole animation)
+		theta = START_ANGLE;
+		thetaCurrent = START_ANGLE;
+		setSwitchRotation(AXIS, START_ANGLE); // Set switch to start angle
+		soundOn = getInitSoundForPath(soundPaths[0]);
+		soundOff = getInitSoundForPath(soundPaths[1]);
+	}
+	
+	// Alternate object constructor, to support a key switch
+	public OperatorSwitch(SceneObjectElement switchElement, ResourcePath[] soundPaths, int totalStates, float startAngleDeg, float endAngleDeg, int rotationAxis, float travelTime,
+			SceneObjectElement keyElement, float keyTravelDistance, int keyDefaultOutPos){
+		this(switchElement, soundPaths, totalStates, startAngleDeg, endAngleDeg, rotationAxis, travelTime);
+		hasKey = true;
+		this.keyElement = keyElement;
+		keyOutState = keyDefaultOutPos;
+		KEY_DIST = keyTravelDistance;
+		setSwitchRotation(AXIS, START_ANGLE); // Set switch to start angle
+		this.keyElement.setVisible(false);
+		soundKeyIn = getInitSoundForPath(soundPaths[2]);
+		soundKeyOut = getInitSoundForPath(soundPaths[3]);
+	}
+	
+	private void setSwitchRotation(int axis, float angle){ // Axis values: 0 = x, 1 = y, 2 = z
+		switch (axis){
+			case 0:
+				switchElement.setRotation(angle, 0.f, 0.f);
+				if (hasKey) keyElement.setRotation(angle, 0.f, 0.f);
+				break;
+			case 1:
+				switchElement.setRotation(0.f, angle, 0.f);
+				if (hasKey) keyElement.setRotation(0.f, angle, 0.f);
+				break;
+			case 2:
+				switchElement.setRotation(0.f, 0.f, -angle);
+				if (hasKey) keyElement.setRotation(0.f, 0.f, -angle);
+				break;
+			default:
+		}
+	}
+
+	private StaticSound getInitSoundForPath(ResourcePath path){
+		if (path == null)
+			System.throwRuntimeException("[OperatorSwitch] Missing sound Resource Path during instantiation!");
+		
+		StaticSound sound = StaticSound.loadFromResource(
+			path,
+			StaticSound.FLAG_MIXDOWN_MONO
+		);
+		if (sound == null)
+			System.throwRuntimeException("[OperatorSwitch] Failed to load sound file!\n\t" + path.toString());
+		
+		sound.setPosition(this.getAbsoluteTranslation());
+		sound.setDistanceParameters(1.f, 1.f);
+		sound.setGain(1.f);
+		sound.setPitch(1.f);
+		sound.setDopplerMode(false);
+		sound.setEnvironmentMode(StaticSound.E_ENVMODE_LOCAL);
+
+		return sound;
+	}
+
+	public Vector3f getAbsoluteTranslation(){
+		return switchElement.getAbsoluteTranslation();
+	}
+
+	public int getCurrentState(){
+		return currentState;
+	}
+
+	public bool isStatic(){
+		return (START_ANGLE == END_ANGLE) ? true : false;
+	}
+
+	public void toggleSwitch(){
+		if (TOTAL_STATES == 2){
+			setSwitchState((currentState == 0) ? 1 : 0);
+		}
+	}
+	
+	public bool setSwitchState(int newState){
+		if (newState != currentState && newState >= 0 && newState < TOTAL_STATES){ // Sanitize passed state
+			t = 0.f;
+			thetaTarget = SLOPE * newState + START_ANGLE - theta; // Equation to calculate the angle target, based on the pre-calculated slope and current angle position
+			thetaCurrent = theta;
+			turningRight = (newState > currentState) ? true : false;
+			currentState = newState;
+			animate = true;
+			return true;
+		}
+		return false;
+	}
+	
+	public void setKeyVisible(){
+		keyElement.setVisible(true);
+	}
+	
+	public void onNextFrame(float tick){
+		if (animate){
+			if (hasKey && !keyIn){ // If switch has a key, animate it into the key hole first
+				if (t == 0){
+					keyElement.setVisible(true);
+					soundKeyIn.setPosition(this.getAbsoluteTranslation());
+					soundKeyIn.play();
+				}
+				delta = -KEY_DIST + (float)Tools.switchRampC1(DELTA_T, KEY_DIST, DELTA_Ta, t);
+				keyElement.setTranslation(0.f, delta, 0.f);
+
+				if (t >= DELTA_T){
+					keyIn = true;
+					t = 0;
+				}
+				else t += tick;
+			}
+			else{ // Then, animate the switch rotation
+				if (t == 0){
+					if (turningRight){
+						soundOn.setPosition(this.getAbsoluteTranslation());
+						soundOn.play();
+					}
+					else{
+						soundOff.setPosition(this.getAbsoluteTranslation());
+						soundOff.play();
+					}
+				}
+				theta = thetaCurrent + (float)Tools.switchRampC1(DELTA_T, thetaTarget, DELTA_Ta, t);
+				setSwitchRotation(AXIS, theta);
+				
+				if (t >= DELTA_T){
+					animate = false;
+					t = 0;
+				}
+				else t += tick;
+			}
+		}
+		// If switch has a key, and it's currently in, and it's not meant to stay in or the switch is in the default position, animate it out of the key hole
+		else if ( hasKey && keyIn && (keyOutState < 0 || currentState == keyOutState) ){
+			if (t == 0){
+				soundKeyOut.setPosition(this.getAbsoluteTranslation());
+				soundKeyOut.play();
+			}
+			delta = 0 + (float)Tools.switchRampC1(DELTA_T, -KEY_DIST, DELTA_Ta, t);
+			keyElement.setTranslation(0.f, delta, 0.f);
+			
+			if (t >= DELTA_T){
+				keyIn = false;
+				keyElement.setVisible(false);
+				t = 0;
+			}
+			else t += tick;
+		}
+	}
+}

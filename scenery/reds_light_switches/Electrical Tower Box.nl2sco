@@ -3,7 +3,7 @@
   <sceneobject>
     <model path="models/electrical_tower_box.dae"/>
     <description>A scripted, animated 30mm plastic switch for controlling lights, with customizable placard.</description>
-    <preview>textures/previews/electrical_tower_box.png</preview>
+    <preview>materials/previews/electrical_tower_box.png</preview>
     <param lockonterrain="true"/>
     <usercolor>
       <label>Switch Color</label>
@@ -15,6 +15,8 @@
       <class>ElectricalTowerBox</class>
       <sharedvm>true</sharedvm>
       <resource id="LICENSE">LICENSE</resource>
+      <resource id="sound_off">sounds/switch_breaker.ogg</resource>
+      <resource id="sound_on">sounds/switch_breaker.ogg</resource>
     </script>
     <scriptparameter>
       <type>string</type>
@@ -52,40 +54,19 @@
       <label>Override Interval (Seconds):</label>
     </scriptparameter>
     <scriptparameter>
-      <type>coaster</type>
-      <id>estop_coaster</id>
-      <description>Will simulate cutting power to the specified coaster by emergency stopping it when the switch is turned off. Set to &quot;&lt;None&gt;&quot; to disable.</description>
-      <label>Coaster to E-Stop when Switched Off</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_breaker.ogg</defaultvalue>
-      <id>switch_on_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned on.</description>
-      <label>Switch On Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_breaker.ogg</defaultvalue>
-      <id>switch_off_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned off.</description>
-      <label>Switch Off Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
       <id>disable_ent_color</id>
       <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
-    <materialpath name="black_plastic">textures/plastic_black.nl2mat</materialpath>
-    <materialpath name="cursor">textures/cursor.nl2mat</materialpath>
-    <materialpath name="key_norm">textures/breaker_key_hole.nl2mat</materialpath>
-    <materialpath name="lsr13">textures/lsr13.nl2mat</materialpath>
-    <materialpath name="metal">textures/soft_metal.nl2mat</materialpath>
-    <materialpath name="rivet">textures/screw.nl2mat</materialpath>
-    <materialpath name="switch">textures/plastic_user0.nl2mat</materialpath>
-    <materialpath name="vent">textures/vent.nl2mat</materialpath>
-    <materialpath name="vented_metal">textures/vented_metal.nl2mat</materialpath>
+    <materialpath name="black_plastic">materials/plastic_black.nl2mat</materialpath>
+    <materialpath name="key_norm">materials/breaker_key_hole.nl2mat</materialpath>
+    <materialpath name="lsr13">materials/lsr13.nl2mat</materialpath>
+    <materialpath name="metal">materials/soft_metal.nl2mat</materialpath>
+    <materialpath name="rivet">materials/screw.nl2mat</materialpath>
+    <materialpath name="switch">materials/plastic_user0.nl2mat</materialpath>
+    <materialpath name="vent">materials/vent.nl2mat</materialpath>
+    <materialpath name="vented_metal">materials/vented_metal.nl2mat</materialpath>
   </sceneobject>
 </root>

@@ -4,8 +4,8 @@
         <contributor>
             <authoring_tool>SketchUp 17.2.2555</authoring_tool>
         </contributor>
-        <created>2022-05-10T06:14:39Z</created>
-        <modified>2022-05-10T06:14:39Z</modified>
+        <created>2024-06-10T17:59:48Z</created>
+        <modified>2024-06-10T17:59:48Z</modified>
         <unit meter="0.0254" name="inch" />
         <up_axis>Z_UP</up_axis>
     </asset>
@@ -27,16 +27,12 @@
         <visual_scene id="ID2">
             <node name="SketchUp">
                 <node name="skp_camera_Last_Saved_SketchUp_View">
-                    <matrix>0.6242294 0.2966897 -0.7227122 -5.73858 -0.7812411 0.2370618 -0.5774634 -5.560938 0 0.9250821 0.3797671 3.297328 0 0 0 1</matrix>
+                    <matrix>0.6242294 0.2966897 -0.7227122 -11.42519 -0.7812411 0.2370618 -0.5774634 -8.568852 0 0.9250821 0.3797671 5.821302 0 0 0 1</matrix>
                     <instance_camera url="#ID1" />
                 </node>
                 <node id="ID3" name="instance_0">
                     <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
                     <instance_node url="#ID4" />
-                </node>
-                <node id="ID27" name="instance_2">
-                    <matrix>1 0 0 -0.5905512 0 1 0 -0.9189257 0 0 1 -0.4229099 0 0 0 1</matrix>
-                    <instance_node url="#ID28" />
                 </node>
             </node>
         </visual_scene>
@@ -71,17 +67,6 @@
                 <bind_material>
                     <technique_common>
                         <instance_material symbol="Material2" target="#ID9">
-                            <bind_vertex_input semantic="UVSET0" input_semantic="TEXCOORD" input_set="0" />
-                        </instance_material>
-                    </technique_common>
-                </bind_material>
-            </instance_geometry>
-        </node>
-        <node id="ID28" name="cursor1">
-            <instance_geometry url="#ID29">
-                <bind_material>
-                    <technique_common>
-                        <instance_material symbol="Material2" target="#ID30">
                             <bind_vertex_input semantic="UVSET0" input_semantic="TEXCOORD" input_set="0" />
                         </instance_material>
                     </technique_common>
@@ -186,45 +171,10 @@
                 </triangles>
             </mesh>
         </geometry>
-        <geometry id="ID29">
-            <mesh>
-                <source id="ID32">
-                    <float_array id="ID35" count="12">1.181102 0 1.181102 0 0 0 1.181102 0 0 0 0 1.181102</float_array>
-                    <technique_common>
-                        <accessor count="4" source="#ID35" stride="3">
-                            <param name="X" type="float" />
-                            <param name="Y" type="float" />
-                            <param name="Z" type="float" />
-                        </accessor>
-                    </technique_common>
-                </source>
-                <source id="ID33">
-                    <float_array id="ID36" count="12">0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
-                    <technique_common>
-                        <accessor count="4" source="#ID36" stride="3">
-                            <param name="X" type="float" />
-                            <param name="Y" type="float" />
-                            <param name="Z" type="float" />
-                        </accessor>
-                    </technique_common>
-                </source>
-                <vertices id="ID34">
-                    <input semantic="POSITION" source="#ID32" />
-                    <input semantic="NORMAL" source="#ID33" />
-                </vertices>
-                <triangles count="2" material="Material2">
-                    <input offset="0" semantic="VERTEX" source="#ID34" />
-                    <p>0 1 2 1 0 3</p>
-                </triangles>
-            </mesh>
-        </geometry>
     </library_geometries>
     <library_materials>
         <material id="ID9" name="material">
             <instance_effect url="#ID8" />
-        </material>
-        <material id="ID30" name="cursor">
-            <instance_effect url="#ID31" />
         </material>
     </library_materials>
     <library_effects>
@@ -234,17 +184,6 @@
                     <lambert>
                         <diffuse>
                             <color>1 1 1 1</color>
-                        </diffuse>
-                    </lambert>
-                </technique>
-            </profile_COMMON>
-        </effect>
-        <effect id="ID31">
-            <profile_COMMON>
-                <technique sid="COMMON">
-                    <lambert>
-                        <diffuse>
-                            <color>0 1 0 1</color>
                         </diffuse>
                     </lambert>
                 </technique>

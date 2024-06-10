@@ -3,7 +3,7 @@
   <sceneobject>
     <model path="models/light_switch4_lid.dae"/>
     <description>A scripted, animated wall-mounted box switch (with 4 switches) for controlling lights.</description>
-    <preview>textures/previews/four_switch_box.png</preview>
+    <preview>materials/previews/four_switch_box.png</preview>
     <param basescalex="1.25"/>
     <param basescaley="1.25"/>
     <param basescalez="1.25"/>
@@ -12,6 +12,8 @@
       <class>CoveredSwitch</class>
       <sharedvm>true</sharedvm>
       <resource id="LICENSE">LICENSE</resource>
+      <resource id="sound_off">sounds/switch_off.ogg</resource>
+      <resource id="sound_on">sounds/switch_on.ogg</resource>
     </script>
     <scriptparameter>
       <type>string</type>
@@ -84,37 +86,22 @@
       <label>Override Interval (Seconds):</label>
     </scriptparameter>
     <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_on.ogg</defaultvalue>
-      <id>switch_on_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned on.</description>
-      <label>Switch On Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_off.ogg</defaultvalue>
-      <id>switch_off_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned off.</description>
-      <label>Switch Off Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
       <id>disable_ent_color</id>
       <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
-    <materialpath name="black">textures/plastic_black.nl2mat</materialpath>
-    <materialpath name="cursor">textures/cursor.nl2mat</materialpath>
-    <materialpath name="four_way_group_labels">textures/four_way_group_labels.nl2mat</materialpath>
-    <materialpath name="four_way_labels">textures/four_way_labels.nl2mat</materialpath>
-    <materialpath name="four_way_lid_label">textures/four_way_lid_label.nl2mat</materialpath>
-    <materialpath name="four_way_lid_lift_label">textures/four_way_lid_lift_label.nl2mat</materialpath>
-    <materialpath name="metal">textures/metal011.nl2mat</materialpath>
-    <materialpath name="screw_normal">textures/screw.nl2mat</materialpath>
-    <materialpath name="screw_normal_0">textures/screw.nl2mat</materialpath>
-    <materialpath name="screw_normal_1">textures/screw.nl2mat</materialpath>
-    <materialpath name="screw_normal_2">textures/screw.nl2mat</materialpath>
-    <materialpath name="screw_normal_3">textures/screw.nl2mat</materialpath>
+    <materialpath name="black">materials/plastic_black.nl2mat</materialpath>
+    <materialpath name="four_way_group_labels">materials/four_way_group_labels.nl2mat</materialpath>
+    <materialpath name="four_way_labels">materials/four_way_labels.nl2mat</materialpath>
+    <materialpath name="four_way_lid_label">materials/four_way_lid_label.nl2mat</materialpath>
+    <materialpath name="four_way_lid_lift_label">materials/four_way_lid_lift_label.nl2mat</materialpath>
+    <materialpath name="metal">materials/metal011.nl2mat</materialpath>
+    <materialpath name="screw_normal">materials/screw.nl2mat</materialpath>
+    <materialpath name="screw_normal_0">materials/screw.nl2mat</materialpath>
+    <materialpath name="screw_normal_1">materials/screw.nl2mat</materialpath>
+    <materialpath name="screw_normal_2">materials/screw.nl2mat</materialpath>
+    <materialpath name="screw_normal_3">materials/screw.nl2mat</materialpath>
   </sceneobject>
 </root>

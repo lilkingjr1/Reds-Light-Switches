@@ -4,8 +4,8 @@
         <contributor>
             <authoring_tool>SketchUp 17.2.2555</authoring_tool>
         </contributor>
-        <created>2022-05-12T19:14:40Z</created>
-        <modified>2022-05-12T19:14:40Z</modified>
+        <created>2024-06-10T18:04:59Z</created>
+        <modified>2024-06-10T18:04:59Z</modified>
         <unit meter="0.0254" name="inch" />
         <up_axis>Z_UP</up_axis>
     </asset>
@@ -27,7 +27,7 @@
         <visual_scene id="ID2">
             <node name="SketchUp">
                 <node name="skp_camera_Last_Saved_SketchUp_View">
-                    <matrix>0.8746165 0.2259182 -0.4289602 -0.9417388 -0.4848154 0.4075609 -0.7738528 -4.442518 0 0.884791 0.4659882 3.161459 0 0 0 1</matrix>
+                    <matrix>0.7733474 0.04529444 -0.6323624 -4.229425 -0.6339825 0.05525127 -0.7713712 -6.800736 0 0.9974446 0.07144431 1.948361 0 0 0 1</matrix>
                     <instance_camera url="#ID1" />
                 </node>
                 <node id="ID3" name="instance_0">
@@ -49,10 +49,6 @@
                 <node id="ID88" name="instance_4">
                     <matrix>1 0 0 0.984252 0 1 0 -2.114961 0 0 1 0.7677165 0 0 0 1</matrix>
                     <instance_node url="#ID89" />
-                </node>
-                <node id="ID111" name="instance_5">
-                    <matrix>1 0 0 0.492126 0 1 0 -1.276036 0 0 1 0.2755906 0 0 0 1</matrix>
-                    <instance_node url="#ID112" />
                 </node>
             </node>
         </visual_scene>
@@ -152,17 +148,6 @@
                 <bind_material>
                     <technique_common>
                         <instance_material symbol="Material2" target="#ID91">
-                            <bind_vertex_input semantic="UVSET0" input_semantic="TEXCOORD" input_set="0" />
-                        </instance_material>
-                    </technique_common>
-                </bind_material>
-            </instance_geometry>
-        </node>
-        <node id="ID112" name="cursor1">
-            <instance_geometry url="#ID113">
-                <bind_material>
-                    <technique_common>
-                        <instance_material symbol="Material2" target="#ID114">
                             <bind_vertex_input semantic="UVSET0" input_semantic="TEXCOORD" input_set="0" />
                         </instance_material>
                     </technique_common>
@@ -571,38 +556,6 @@
                 </triangles>
             </mesh>
         </geometry>
-        <geometry id="ID113">
-            <mesh>
-                <source id="ID116">
-                    <float_array id="ID119" count="12">0.984252 0 0.984252 0 0 0 0.984252 0 0 0 0 0.984252</float_array>
-                    <technique_common>
-                        <accessor count="4" source="#ID119" stride="3">
-                            <param name="X" type="float" />
-                            <param name="Y" type="float" />
-                            <param name="Z" type="float" />
-                        </accessor>
-                    </technique_common>
-                </source>
-                <source id="ID117">
-                    <float_array id="ID120" count="12">0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
-                    <technique_common>
-                        <accessor count="4" source="#ID120" stride="3">
-                            <param name="X" type="float" />
-                            <param name="Y" type="float" />
-                            <param name="Z" type="float" />
-                        </accessor>
-                    </technique_common>
-                </source>
-                <vertices id="ID118">
-                    <input semantic="POSITION" source="#ID116" />
-                    <input semantic="NORMAL" source="#ID117" />
-                </vertices>
-                <triangles count="2" material="Material2">
-                    <input offset="0" semantic="VERTEX" source="#ID118" />
-                    <p>0 1 2 1 0 3</p>
-                </triangles>
-            </mesh>
-        </geometry>
     </library_geometries>
     <library_materials>
         <material id="ID6" name="black">
@@ -619,9 +572,6 @@
         </material>
         <material id="ID91" name="key">
             <instance_effect url="#ID92" />
-        </material>
-        <material id="ID114" name="cursor">
-            <instance_effect url="#ID115" />
         </material>
     </library_materials>
     <library_effects>
@@ -715,17 +665,6 @@
                     <lambert>
                         <diffuse>
                             <texture texture="ID95" texcoord="UVSET0" />
-                        </diffuse>
-                    </lambert>
-                </technique>
-            </profile_COMMON>
-        </effect>
-        <effect id="ID115">
-            <profile_COMMON>
-                <technique sid="COMMON">
-                    <lambert>
-                        <diffuse>
-                            <color>0 1 0 1</color>
                         </diffuse>
                     </lambert>
                 </technique>

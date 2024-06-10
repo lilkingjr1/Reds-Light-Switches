@@ -1,0 +1,52 @@
+/**
+	Operator Touch Panel NL2 OperatorSwitch
+	Author: David Wolfe (Red-Thirten)
+	Date: 06/08/2024
+	Extends OperatorSwitch object to handle switching the screen texture.
+	Licensed under GNU GPLv3 - See LICENSE for more details.
+
+	Constructors:
+		-- Default object constructor
+		OperatorTouchPanel(
+			SceneObjectElement switchElement,
+			ResourcePath[] soundPaths,
+			int totalStates,
+			float startAngleDeg,
+			float endAngleDeg,
+			int rotationAxis,
+			float travelTime
+		)
+
+	Method Overrides:
+		void setSwitchState(int newState) - Same as OperatorSwitch, but also changes the texture animation index.
+*/
+
+package obj;
+
+import com.nolimitscoaster.SceneObjectElement;
+import com.nolimitscoaster.ResourcePath;
+
+public class OperatorTouchPanel extends OperatorSwitch{
+	// Default object constructor
+	public OperatorTouchPanel(
+		SceneObjectElement switchElement,
+		ResourcePath[] soundPaths,
+		int totalStates,
+		float startAngleDeg,
+		float endAngleDeg,
+		int rotationAxis,
+		float travelTime
+	){
+		super(switchElement, soundPaths, totalStates, startAngleDeg, endAngleDeg, rotationAxis, travelTime);
+		
+		switchElement.setTextureAnimationIndex(currentState);
+	}
+	
+	public bool setSwitchState(int newState){
+		if ( super.setSwitchState(newState) ){
+			switchElement.setTextureAnimationIndex(newState);
+			return true;
+		}
+		return false;
+	}
+}

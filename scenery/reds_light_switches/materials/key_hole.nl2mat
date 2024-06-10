@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <description>A brushed metal texture, with normal map, metalness, and roughness.</description>
-    <preview>materials/Metal011_2K_Color.jpg</preview>
+    <description>A brushed metal texture, with key height map, metalness, and roughness.</description>
+    <preview>textures/switch/key_height.png</preview>
     <renderpass>
       <shadercore>Result = tex0;
 Roughness = tex2;</shadercore>
@@ -15,16 +15,16 @@ Roughness = tex2;</shadercore>
       <reflection bump="true" fresnelconst="0.4" fresnelvar="0.7"/>
       <rgbgen mode="bumplighting"/>
       <texunit>
-        <map>materials/Metal011_2K_Color.jpg</map>
+        <map>textures/Metal011_2K_Color.jpg</map>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/Metal011_2K_Normal.jpg</map>
-        <bump mode="normalgloss"/>
+        <map>textures/switch/key_height.png</map>
+        <bump mode="heightgloss" heightscale="30"/>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/Metal011_2K_Roughness.jpg</map>
+        <map>textures/Metal011_2K_Roughness.jpg</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

@@ -2,9 +2,9 @@
 <root>
   <material>
     <description>A brushed metal screw, with normal map and roughness.</description>
-    <preview>materials/key_norm.jpg</preview>
+    <preview>textures/screw_norm.jpg</preview>
     <renderpass>
-      <shadercore>Result = Mul(tex0, 0.1);
+      <shadercore>Result = tex0;
 Roughness = Mul(tex2, 1.5);
 Metallic = 0.5;</shadercore>
       <transparency mode="opaque"/>
@@ -16,16 +16,16 @@ Metallic = 0.5;</shadercore>
       <reflection bump="true" fresnelconst="0.3" fresnelvar="0.7"/>
       <rgbgen mode="bumplighting"/>
       <texunit>
-        <map>materials/Metal011_2K_Color.jpg</map>
+        <map>textures/Metal011_2K_Color.jpg</map>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/key_norm.jpg</map>
+        <map>textures/screw_norm.jpg</map>
         <bump mode="normalgloss"/>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/Metal011_2K_Roughness.jpg</map>
+        <map>textures/Metal011_2K_Roughness.jpg</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <description>On/off label for breaker switch</description>
-    <preview>materials/breaker_on_off.jpg</preview>
+    <description>Main label for breaker switch</description>
+    <preview>textures/breaker_label.jpg</preview>
     <renderpass>
       <transparency mode="opaque"/>
       <linearshading/>
       <rgbgen mode="lighting"/>
       <texunit>
-        <map>materials/breaker_on_off.jpg</map>
+        <map>textures/breaker_label.jpg</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

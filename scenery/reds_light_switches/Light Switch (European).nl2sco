@@ -3,7 +3,7 @@
   <sceneobject>
     <model path="models/light_switch_euro.dae"/>
     <description>A scripted, animated, European style wall switch for controlling lights.</description>
-    <preview>textures/previews/euro_switch.png</preview>
+    <preview>materials/previews/euro_switch.png</preview>
     <usercolor>
       <label>Cover Plate Color</label>
       <index>0</index>
@@ -14,6 +14,8 @@
       <class>EuroSwitch</class>
       <sharedvm>true</sharedvm>
       <resource id="LICENSE">LICENSE</resource>
+      <resource id="sound_off">sounds/switch_off.ogg</resource>
+      <resource id="sound_on">sounds/switch_on.ogg</resource>
     </script>
     <scriptparameter>
       <type>string</type>
@@ -44,27 +46,12 @@
       <label>Override Interval (Seconds):</label>
     </scriptparameter>
     <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_on.ogg</defaultvalue>
-      <id>switch_on_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned on.</description>
-      <label>Switch On Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
-      <type filetype="audio">resourcepath</type>
-      <defaultvalue>sounds/switch_off.ogg</defaultvalue>
-      <id>switch_off_sfx_file</id>
-      <description>Sound effect file to play when the switch is turned off.</description>
-      <label>Switch Off Sound Effect</label>
-    </scriptparameter>
-    <scriptparameter>
       <type>bool</type>
       <defaultvalue>false</defaultvalue>
       <id>disable_ent_color</id>
       <description>Disables changing the alpha channel of entity slot 0 (used to make vanilla lights appear fully &quot;off&quot;). Useful if colors or textures are being negatively affected on 3rd party lights.</description>
       <label>Disable Entity Color Changing</label>
     </scriptparameter>
-    <materialpath name="cursor">textures/cursor.nl2mat</materialpath>
-    <materialpath name="material">textures/plastic_user0.nl2mat</materialpath>
+    <materialpath name="material">materials/plastic_user0.nl2mat</materialpath>
   </sceneobject>
 </root>

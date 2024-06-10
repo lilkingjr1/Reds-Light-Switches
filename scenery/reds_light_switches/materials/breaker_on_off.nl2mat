@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <description>Lift label for the 4-way switch box lid.</description>
-    <preview>materials/four_way_lid_label.jpg</preview>
+    <description>On/off label for breaker switch</description>
+    <preview>textures/breaker_on_off.jpg</preview>
     <renderpass>
       <transparency mode="opaque"/>
       <linearshading/>
       <rgbgen mode="lighting"/>
       <texunit>
-        <map>materials/four_way_lid_lift_label.jpg</map>
+        <map>textures/breaker_on_off.jpg</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

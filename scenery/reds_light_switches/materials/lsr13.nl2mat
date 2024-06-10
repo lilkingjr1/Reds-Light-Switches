@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <description>Label for the 4-way switch box lid.</description>
-    <preview>materials/four_way_lid_label.jpg</preview>
+    <preview>textures/lsr13.png</preview>
     <renderpass>
-      <transparency mode="opaque"/>
+      <transparency mode="cutout"/>
+      <alphatest function="ge128"/>
       <linearshading/>
       <rgbgen mode="lighting"/>
       <texunit>
-        <map>materials/four_way_lid_label.jpg</map>
+        <map>textures/lsr13.png</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

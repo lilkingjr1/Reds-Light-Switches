@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <script>
+    <classpath>Copy the folder in scenery to your park to use</classpath>
+    <class>WelcomeScript</class>
+    <sharedvm>true</sharedvm>
+    <resource id="README">scenery/reds_light_switches/README.html</resource>
+    <resource id="resource1">scenery/reds_light_switches/[ Placards ]/Default.jpg</resource>
+    <resource id="resource2">scenery/reds_light_switches/[ Placards ]/Lights (Off-On).jpg</resource>
+    <resource id="resource3">scenery/reds_light_switches/[ Placards ]/Running Lights (Off-On).jpg</resource>
+    <resource id="resource4">scenery/reds_light_switches/[ Placards ]/Show Lights (Off-On).jpg</resource>
+  </script>
+</root>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <preview>materials/vent.jpg</preview>
+    <description>Labels for the 4-way switch box with lid.</description>
+    <preview>textures/four_way_labels_color.jpg</preview>
     <renderpass>
       <transparency mode="opaque"/>
       <linearshading/>
       <rgbgen mode="bumplighting"/>
       <texunit>
-        <map>materials/vent.jpg</map>
+        <map>textures/four_way_labels_color.jpg</map>
         <tcgen mode="base"/>
       </texunit>
       <texunit>
-        <map>materials/vent.jpg</map>
-        <bump mode="heightgloss" heightscale="25"/>
+        <map>textures/four_way_labels_normal.jpg</map>
+        <bump mode="normalgloss"/>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>

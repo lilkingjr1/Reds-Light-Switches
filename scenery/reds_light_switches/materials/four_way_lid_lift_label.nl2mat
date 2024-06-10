@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <material>
-    <description>Cursor for Touch Panel Switch</description>
-    <preview>materials/hand_cursor.png</preview>
+    <description>Lift label for the 4-way switch box lid.</description>
+    <preview>textures/four_way_lid_label.jpg</preview>
     <renderpass>
-      <transparency mode="cutout"/>
-      <alphatest function="ge128"/>
+      <transparency mode="opaque"/>
       <linearshading/>
       <rgbgen mode="lighting"/>
       <texunit>
-        <map>materials/hand_cursor.png</map>
+        <map>textures/four_way_lid_lift_label.jpg</map>
         <tcgen mode="base"/>
       </texunit>
     </renderpass>
