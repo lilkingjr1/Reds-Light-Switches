@@ -1,12 +1,12 @@
 /**
 	Light Group NL2 Class
 	Author: David Wolfe (Red-Thirten)
-	Date: 06/08/2024
+	Date: 07/11/2024
 	A Java object representing a group of SCOs with lights that can have the state of their lights changed over time.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 
 	Constructors:
-		LightGroup(SceneObject[] scos, float delayTime, float flickerTime, float overrideInterval, bool entColorEnabled, bool initState) -- Default object constructor
+		LightGroup(SceneObject[] scos, float delayTime, float flickerMaxTime, float overrideInterval, bool entColorEnabled, bool initState) -- Default object constructor
 
 	Methods:
 		void setDelayTime(float time) -- Set the delay time.
@@ -22,26 +22,32 @@ import nlvm.math3d.Vector4f;
 import nlvm.lang.Math;
 
 public class LightGroup{
+	private static final float FLICKER_COEF = 0.05f; // Flicker rate (smaller = faster)
+	private static final float FLICKER_INTENSITY = 0.4f; // Max light brightness while flickering
+	private static final float FLICKER_MIN_TIME_PCT = 0.1f; // Percent of max possible flicker time it should minimally flicker for
+
 	// Semi-static (set only once during construction)
 	private bool ENT_COLOR_ENABLED;
-	private float FLICKER_TIME, OVERRIDE_INTERVAL;
+	private float FLICKER_MAX_TIME, OVERRIDE_INTERVAL;
 	private SceneObject[] SCOS;
 	private Vector3f[][] ORIG_LIGHT_COLORS;
 
 	private bool delay, flicker, curState = false;
 	private float curTime, overrideTime, delayTime = 0.f;
+	private float[] scoRandFlickerTimePcts;
 	
 	private Vector4f entColor = new Vector4f(1,1,1,0);
 
-	public LightGroup(SceneObject[] scos, float delayTime, float flickerTime, float overrideInterval, bool entColorEnabled, bool initState){ // Default object constructor
+	public LightGroup(SceneObject[] scos, float delayTime, float flickerMaxTime, float overrideInterval, bool entColorEnabled, bool initState){ // Default object constructor
 		SCOS = scos;
 		this.delayTime = delayTime;
-		FLICKER_TIME = flickerTime;
+		FLICKER_MAX_TIME = flickerMaxTime;
 		OVERRIDE_INTERVAL = overrideInterval; // Get overrideInterval value as a "watchdog" backup to further enforce switch and light synchronization
 		ENT_COLOR_ENABLED = entColorEnabled;
 		curState = initState;
 
 		ORIG_LIGHT_COLORS = new Vector3f[SCOS.length][];
+		scoRandFlickerTimePcts = new float[SCOS.length];
 
 		for (int i = 0; i < SCOS.length; i++){
 			ORIG_LIGHT_COLORS[i] = new Vector3f[SCOS[i].getLightCount()];
@@ -52,7 +58,7 @@ public class LightGroup{
 		}
 
 		// Attempt to set lights to match switch state (even though their script will likely override it in the first few seconds of simulation...)
-		setLightsEnabled(initState);
+		setAllLightsIntensity(initState ? 1.f : 0.f);
 	}
 
 	public void setDelayTime(float time){
@@ -60,79 +66,101 @@ public class LightGroup{
 	}
 
 	public void toggleLights(){
+		// Toggle state
 		curState = !curState;
-		flicker = false;
-		delay = true;
+		// Generate new random SCO flicker times when turning on (if enabled)
+		if (curState && FLICKER_MAX_TIME > 0){
+			for (int i = SCOS.length-1; i >= 0; --i){
+				scoRandFlickerTimePcts[i] = (float)Math.random();
+			}
+		}
+		// Prime states for onNextFrame() animation
 		curTime = 0.f;
+		delay = true;
+		flicker = false;
 	}
 	
 	public void onNextFrame(float tick){
 		if (delay){
-			if (curTime < delayTime) curTime += tick;
+			if (curTime < delayTime){
+				curTime += tick;
+			}
 			else{
 				delay = false;
-				if (curState && FLICKER_TIME > 0){
+				if (curState && FLICKER_MAX_TIME > 0){
 					curTime = 0.f;
 					flicker = true;
 				}
 				else{
-					if (curState)
-						setLightsEnabled(true);
-					else
-						setLightsEnabled(false);
+					setAllLightsIntensity(curState ? 1.f : 0.f);
 				}
 			}
 		}
 		else if (flicker){
-			if (curTime < FLICKER_TIME){
-				setLightsIntensity( (curTime/FLICKER_TIME) * ((float) Math.random()) ); // Flicker
+			if (curTime <= FLICKER_MAX_TIME){
+				for (int i = SCOS.length-1; i >= 0; --i){
+					// Flicker for random % of max flicker time (above min flicker time %)
+					if (curTime < FLICKER_MAX_TIME * Math.max(FLICKER_MIN_TIME_PCT, scoRandFlickerTimePcts[i])){
+						setLightsIntensityAtScoIndex(
+							i,
+							flicker_saw(curTime + scoRandFlickerTimePcts[i]) // Random phase shift to avoid synchronous flickering over all SCOs
+						);
+					}
+					// SCO is done flickering
+					else{
+						setLightsIntensityAtScoIndex(i, 1.f);
+					}
+				}
 				curTime += tick;
 			}
 			else{
 				flicker = false;
-				setLightsEnabled(true);
+				setAllLightsIntensity(1.f);
 			}
 		}
 		else if (OVERRIDE_INTERVAL > 0.f){
 			overrideTime += tick;
 			if (overrideTime > OVERRIDE_INTERVAL){
 				overrideTime = 0.f;
-				setLightsEnabled(curState);
+				setAllLightsIntensity(curState ? 1.f : 0.f);
 			}
 		}
 	}
 
-	private void setLightsIntensity(float intensity){
+	private void setLightsIntensityAtScoIndex(int i, float intensity){
+		for (int j = SCOS[i].getLightCount()-1; j >= 0; --j){
+			if (intensity > 0){
+				if (!SCOS[i].getLightAt(j).isEnabled())
+					SCOS[i].getLightAt(j).setEnabled(true);
+
+				if (FLICKER_MAX_TIME > 0){
+					SCOS[i].getLightAt(j).setColorLinear(
+						ORIG_LIGHT_COLORS[i][j].x * intensity,
+						ORIG_LIGHT_COLORS[i][j].y * intensity,
+						ORIG_LIGHT_COLORS[i][j].z * intensity
+					);
+				}
+			}
+			else{
+				SCOS[i].getLightAt(j).setEnabled(false);
+			}
+
+			if (ENT_COLOR_ENABLED){
+				entColor.w = intensity;
+				SCOS[i].setEntityColor(entColor);
+			}
+		}
+	}
+
+	private void setAllLightsIntensity(float intensity){
 		for (int i = SCOS.length-1; i >= 0; --i){
-			for (int j = SCOS[i].getLightCount()-1; j >= 0; --j){
-				if (intensity > 0){
-					if (!SCOS[i].getLightAt(j).isEnabled())
-						SCOS[i].getLightAt(j).setEnabled(true);
-
-					if (FLICKER_TIME > 0){
-						SCOS[i].getLightAt(j).setColorLinear(
-							ORIG_LIGHT_COLORS[i][j].x * intensity,
-							ORIG_LIGHT_COLORS[i][j].y * intensity,
-							ORIG_LIGHT_COLORS[i][j].z * intensity
-						);
-					}
-				}
-				else{
-					SCOS[i].getLightAt(j).setEnabled(false);
-				}
-
-				if (ENT_COLOR_ENABLED){
-					entColor.w = intensity;
-					SCOS[i].setEntityColor(entColor);
-				}
-			}
+			setLightsIntensityAtScoIndex(i, intensity);
 		}
 	}
 
-	private void setLightsEnabled(bool state){
-		if (state)
-			setLightsIntensity(1.f);
-		else
-			setLightsIntensity(0.f);
+	private static float flicker_saw(float time){
+		time = (time % (float)(FLICKER_COEF * Math.PI)) / (float)(FLICKER_COEF * Math.PI);
+		time = 1 - time;
+		return time * FLICKER_INTENSITY;
 	}
 }

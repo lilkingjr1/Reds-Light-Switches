@@ -35,8 +35,8 @@
       <type>double</type>
       <defaultvalue>0</defaultvalue>
       <id>flicker_time</id>
-      <description>Amount of time lights will flicker / warm up after being turned on. Set to 0 to disable.</description>
-      <label>Flicker Time (Seconds):</label>
+      <description>Max amount of time lights will take to flicker / warm up after being turned on. Set to 0 to disable.</description>
+      <label>Max Flicker Time (Seconds):</label>
     </scriptparameter>
     <scriptparameter>
       <type>double</type>
