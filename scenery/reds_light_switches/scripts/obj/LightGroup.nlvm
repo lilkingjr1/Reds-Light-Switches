@@ -36,7 +36,7 @@ public class LightGroup{
 	private float curTime, overrideTime, delayTime = 0.f;
 	private float[] scoRandFlickerTimePcts;
 	
-	private Vector4f entColor = new Vector4f(1,1,1,0);
+	private Vector4f[] origEntColors;
 
 	public LightGroup(SceneObject[] scos, float delayTime, float flickerMaxTime, float overrideInterval, bool entColorEnabled, bool initState){ // Default object constructor
 		SCOS = scos;
@@ -47,10 +47,31 @@ public class LightGroup{
 		curState = initState;
 
 		ORIG_LIGHT_COLORS = new Vector3f[SCOS.length][];
-		scoRandFlickerTimePcts = new float[SCOS.length];
+		if (ENT_COLOR_ENABLED){
+			origEntColors = new Vector4f[SCOS.length];
+		}
+
+		if (FLICKER_MAX_TIME > 0){
+			scoRandFlickerTimePcts = new float[SCOS.length];
+		}
 
 		for (int i = 0; i < SCOS.length; i++){
 			ORIG_LIGHT_COLORS[i] = new Vector3f[SCOS[i].getLightCount()];
+
+			if (ENT_COLOR_ENABLED){
+				// If able, use index 0 element/entity color of SCO for original entity color
+				if (SCOS[i].getElementCount() > 0){
+					origEntColors[i] = new Vector4f();
+					SCOS[i].getElementAt(0).getEntityColor(0, origEntColors[i]);
+				}
+				// Otherwise, use index 0 light color of SCO for original entity color
+				else{
+					Vector3f origLightColor = new Vector3f();
+					SCOS[i].getLightAt(0).getColor(origLightColor);
+					origEntColors[i] = new Vector4f(origLightColor, 0.f);
+				}
+			}
+
 			for (int j = 0; j < SCOS[i].getLightCount(); j++){
 				ORIG_LIGHT_COLORS[i][j] = new Vector3f();
 				SCOS[i].getLightAt(j).getColorLinear(ORIG_LIGHT_COLORS[i][j]);
@@ -144,11 +165,11 @@ public class LightGroup{
 			else{
 				SCOS[i].getLightAt(j).setEnabled(false);
 			}
+		}
 
-			if (ENT_COLOR_ENABLED){
-				entColor.w = intensity;
-				SCOS[i].setEntityColor(entColor);
-			}
+		if (ENT_COLOR_ENABLED){
+			origEntColors[i].w = intensity;
+			SCOS[i].setEntityColor(origEntColors[i]);
 		}
 	}
 
