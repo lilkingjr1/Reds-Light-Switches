@@ -20,7 +20,7 @@ public class KeySwitch extends LightSwitch{
 		super.SCRIPT_NAME = "KeySwitch";	// Script name for debugging
 		super.ON_ANGLE = 45.f;				// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = -45.f;			// Angle from the model's original switch position to appear off
-		super.COOLDOWN = 2.f;				// Cooldown (in seconds) before the switch can be switched again
+		super.COOLDOWN_TIME = 2.f;				// Cooldown (in seconds) before the switch can be switched again
 		super.SWITCH_TRAVEL_TIME = 0.6f;	// Time (in seconds) for the switch to travel ("speed")
 		super.AXIS = 2;						// Axis values: 0 = x, 1 = y, 2 = z
 		

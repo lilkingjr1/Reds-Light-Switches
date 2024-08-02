@@ -2,7 +2,7 @@
  	Light Switch NL2 Script
 	Author: David Wolfe (Red-Thirten)
 	Contributors: parker02311
-	Date: 06/08/2024
+	Date: 08/01/2024
 	Detects user input to switch, animates switch SCO, plays sounds, and controls the lights of specified SCOs in the simulation.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 */
@@ -22,14 +22,16 @@ public class LightSwitch extends Script implements InteractionActionListener{
 	protected String SWITCH_ELEMENT_PREFIX = "switch";		// Prefix of the switch element names in the SCO/model
 	protected float ON_ANGLE = 0.f;							// Angle from the model's original switch position to appear on
 	protected float OFF_ANGLE = 75.f;						// Angle from the model's original switch position to appear off
-	protected float COOLDOWN = 0.25f;						// Cooldown (in seconds) before the switch can be switched again
+	protected float COOLDOWN_TIME = 0.25f;						// Cooldown (in seconds) before the switch can be switched again
 	protected float ACTIVE_DIST = 0.04f;					// Distance (in meters) between the player and the switch where the switch is active
 	protected float SWITCH_TRAVEL_TIME = 0.025f;			// Time (in seconds) for the switch to travel ("speed")
 	protected int AXIS = 0;									// Axis values: 0 = x, 1 = y, 2 = z
+	private static final float SUN_ELEVATION_LIMIT = (float) Math.toRadians(18.0);	// 18 degrees is the default sun angle limit for vanilla SCO lights to turn on and off
 	
 	protected SceneObject sco;
 	
-	private bool flipped, firstSwitchViewed = false;
+	private bool isDay = sim.getCurSunElevation() > SUN_ELEVATION_LIMIT;
+	private bool[] switchDaylightSensorEnabled;
 	private float curCooldownTime = 0.f;
 	
 	protected InteractionObject[] interactionObjects;
@@ -44,17 +46,18 @@ public class LightSwitch extends Script implements InteractionActionListener{
 			SCRIPT_NAME
 		);
 		
-		int numSwitches = 1;
 		// Check for at least one switch
-		SceneObjectTools.getElementForName(sco, SWITCH_ELEMENT_PREFIX + numSwitches, SCRIPT_NAME);
+		SceneObjectTools.getElementForName(sco, SWITCH_ELEMENT_PREFIX + "1", SCRIPT_NAME);
 		// Find number of switches
-		while (sco.getElementForName(SWITCH_ELEMENT_PREFIX + numSwitches) != null) numSwitches++;
-		--numSwitches;
+		int numSwitches = 0;
+		while (sco.getElementForName(SWITCH_ELEMENT_PREFIX + (numSwitches+1)) != null)
+			numSwitches++;
 		// Initialize arrays
 		interactionObjects = new InteractionObject[numSwitches];
 		switches = new OperatorSwitch[numSwitches];
 		switchLights = new LightGroup[numSwitches];
 		switchLightsInv = new LightGroup[numSwitches];
+		switchDaylightSensorEnabled = new bool[numSwitches];
 		
 		// Iterate through switches for setup			
 		for (int i = 0; i < numSwitches; i++){
@@ -77,6 +80,8 @@ public class LightSwitch extends Script implements InteractionActionListener{
 			switches[i].setSwitchState(
 				sco.getBooleanParameter("initial_state" + (i+1)).boolValue() ? 1 : 0
 			);
+			// Set if daylight sensor is enabled
+			switchDaylightSensorEnabled[i] = sco.getBooleanParameter("daylight_sensor" + (i+1)).boolValue();
 			
 			// Setup interaction objects
 			interactionObjects[i] = InteractionObject.createSimpleButton();
@@ -127,42 +132,50 @@ public class LightSwitch extends Script implements InteractionActionListener{
 	}
 
 	public void onInteractionAction(InteractionObject interactionObject){
-		if (flipped) return;
-
-		int i = 0;
-		while (interactionObject != interactionObjects[i]) i++;
-
-		if (switches[i].getCurrentState() != 0){
-			switches[i].setSwitchState(0);
-		}
-		else{
-			switches[i].setSwitchState(1);
-		}
-		if (switchLights[i] != null) switchLights[i].toggleLights();
-		if (switchLightsInv[i] != null) switchLightsInv[i].toggleLights();
-		flipped = true;
-
-		for (int j = 0; j < interactionObjects.length; j++){
-			interactionObjects[j].setEnabled(false);
+		for (int i = 0; i < interactionObjects.length; i++){
+			// Disable all switch interactions for cooldown
+			interactionObjects[i].setEnabled(false);
+			// Flip the switch at the index of the matching InteractionObject
+			if (interactionObject == interactionObjects[i])
+				flipSwitch(i);
 		}
 	}
 
 	public void onNextFrame(float tick){
-		if (flipped){
+		// If any switch interaction is disabled, it was clicked, so do cooldown
+		if (!interactionObjects[0].isEnabled()){
 			curCooldownTime = curCooldownTime + tick;
-			if (curCooldownTime > COOLDOWN){
+			if (curCooldownTime > COOLDOWN_TIME){
 				curCooldownTime = 0.f;
-				flipped = false;
-				for (int j = 0; j < interactionObjects.length; j++){
-					interactionObjects[j].setEnabled(true);
+				for (int i = interactionObjects.length-1; i >= 0; --i){
+					interactionObjects[i].setEnabled(true);
 				}
 			}
 		}
-		
-		for (int i = switches.length-1; i >= 0; --i){ // Run each switch, switchLight, and switchLightsInv objects' onNextFrame() to animate
+
+		// Daylight Sensor Check
+		if (isDay != sim.getCurSunElevation() > SUN_ELEVATION_LIMIT){
+			isDay = !isDay;
+			for (int i = switches.length-1; i >= 0; --i){
+				if (switchLights[i] != null
+						&& switchDaylightSensorEnabled[i]
+						&& (isDay == switchLights[i].isOn())){
+					flipSwitch(i);
+				}
+			}
+		}
+
+		// Run each switch, switchLight, and switchLightsInv objects' onNextFrame() to animate
+		for (int i = switches.length-1; i >= 0; --i){
 			switches[i].onNextFrame(tick);
 			if (switchLights[i] != null) switchLights[i].onNextFrame(tick);
 			if (switchLightsInv[i] != null) switchLightsInv[i].onNextFrame(tick);
 		}
-	}	
+	}
+
+	private void flipSwitch(int switchIndex){
+		switches[switchIndex].toggleSwitch();
+		if (switchLights[switchIndex] != null) switchLights[switchIndex].toggleLights();
+		if (switchLightsInv[switchIndex] != null) switchLightsInv[switchIndex].toggleLights();
+	}
 }

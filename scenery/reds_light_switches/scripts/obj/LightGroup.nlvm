@@ -1,7 +1,7 @@
 /**
 	Light Group NL2 Class
 	Author: David Wolfe (Red-Thirten)
-	Date: 07/11/2024
+	Date: 08/01/2024
 	A Java object representing a group of SCOs with lights that can have the state of their lights changed over time.
 	Licensed under GNU GPLv3 - See LICENSE for more details.
 
@@ -9,9 +9,10 @@
 		LightGroup(SceneObject[] scos, float delayTime, float flickerMaxTime, float overrideInterval, bool entColorEnabled, bool initState) -- Default object constructor
 
 	Methods:
-		void setDelayTime(float time) -- Set the delay time.
-		void toggleLights() -- Toggle the lights' state (on/off).
-		void onNextFrame(float tick) -- Call to animate lights.
+		bool isOn() - Returns if the lights are set to be on (delay and flicker periods are considered to be "on").
+		void setDelayTime(float time) - Set the delay time.
+		void toggleLights() - Toggle the lights' state (on/off).
+		void onNextFrame(float tick) - Call to animate lights.
 */
 
 package obj;
@@ -80,6 +81,10 @@ public class LightGroup{
 
 		// Attempt to set lights to match switch state (even though their script will likely override it in the first few seconds of simulation...)
 		setAllLightsIntensity(initState ? 1.f : 0.f);
+	}
+
+	public bool isOn(){
+		return curState;
 	}
 
 	public void setDelayTime(float time){

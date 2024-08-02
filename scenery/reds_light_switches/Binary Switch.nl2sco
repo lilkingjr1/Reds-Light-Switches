@@ -61,6 +61,13 @@
       <label>Start &quot;On&quot;</label>
     </scriptparameter>
     <scriptparameter>
+      <type>bool</type>
+      <defaultvalue>false</defaultvalue>
+      <id>daylight_sensor1</id>
+      <description>When enabled, this switch will automatically turn on at sunset and off at sunrise (it will only make one attempt to change state per daylight transition).</description>
+      <label>Enable Daylight Sensor</label>
+    </scriptparameter>
+    <scriptparameter>
       <type>double</type>
       <defaultvalue>0</defaultvalue>
       <id>flicker_time</id>

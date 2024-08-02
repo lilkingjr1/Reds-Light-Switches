@@ -12,7 +12,7 @@ public class BreakerSwitch extends LightSwitch{
 		super.SCRIPT_NAME = "BreakerSwitch";	// Script name for debugging
 		super.ON_ANGLE = -90.f;					// Angle from the model's original switch position to appear on
 		super.OFF_ANGLE = 0.f;					// Angle from the model's original switch position to appear off
-		super.COOLDOWN = 0.75f;					// Cooldown (in seconds) before the switch can be switched again
+		super.COOLDOWN_TIME = 0.75f;					// Cooldown (in seconds) before the switch can be switched again
 		super.ACTIVE_DIST = 0.12f;				// Distance (in meters) between the player and the switch where the switch is active
 		super.SWITCH_TRAVEL_TIME = 0.5f;		// Time (in seconds) for the switch to travel ("speed")
 		
